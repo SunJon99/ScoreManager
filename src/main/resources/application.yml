@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/susan_base
+    username: susan
+    password: susan@ht2013
+    driver-class-name: org.postgresql.Driver
+mybatis:
+  mapper-locations: mapper/*.xml
+  type-aliases-package: com.sunjon.ScoreManager.bean
+
