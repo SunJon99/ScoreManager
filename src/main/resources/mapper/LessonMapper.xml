@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunjon.ScoreManager.mapper.LEssonMapper">
+    <resultMap id="LessonMap" type="Lesson">
+        <id property="id" column="ls_id"/>
+        <result property="name" column="ls_name"/>
+        <result property="credit" column="ls_credit"/>
+        <result property="time" column="ls_time"/>
+    </resultMap>
+
+    <insert id="addLesson" parameterType="Lesson">
+        insert into lesson(ls_name, ls_name, ls_credit, ls_time)
+        values(#{name}, #{credit}, #{credit}, #{time})
+    </insert>
+
+    <update id="updateLesson" parameterType="Lesson">
+        update lesson
+        <set>
+            <if test="name != null and name != ''">ls_name=#{name},</if>
+            <if test="credit != null and credit > 0">ls_credit=#{credit},</if>
+            <if test="time != null and time != ''">ls_time=#{time},</if>
+            update_time = current_timestamp ;
+        </set>
+    </update>
+
+    <delete id="deleteLesson" parameterType="Lesson">
+        delete from lesson where
+        <choose>
+            <when test="id != null and id > 0">ls_id = #{id}</when>
+            <when test="name != null and name != ''">ls_name = #{name}</when>
+            <when test="time != null and time != ''">ls_time = #{time}</when>
+        </choose>
+    </delete>
+</mapper>

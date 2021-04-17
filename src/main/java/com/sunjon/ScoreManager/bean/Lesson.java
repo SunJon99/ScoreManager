@@ -1,5 +1,8 @@
 package com.sunjon.ScoreManager.bean;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("Lesson")
 public class Lesson {
     private Integer id; //课程ID
     private String name; //课程名
