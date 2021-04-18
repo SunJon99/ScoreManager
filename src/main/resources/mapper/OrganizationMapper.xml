@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunjon.ScoreManager.mapper.OrganizationMapper">
+    <resultMap id="OrganizationMap" type="Organization">
+        <id property="id" column="og_id"/>
+        <result property="name" column="og_name"/>
+        <result property="nature" column="og_nature"/>
+        <result property="endTime" column="og_endtime"/>
+        <result property="email" column="og_email"/>
+        <result property="address" column="og_add"/>
+    </resultMap>
+
+    <select id="findAllOrganizations" resultMap="OrganizationMap">
+        select og_id,og_name,og_nature,og_endtime,og_email,og_add
+        from class
+    </select>
+
+    <select id="findOrganizations" parameterType="Organization" resultType="OrganizationMap">
+        select og_id,og_name,og_nature,og_endtime,og_email,og_add from organization
+        <where>
+            <if test="id != null and id > 0">og_id = #{id}</if>
+            <if test="name != null and name != ''">og_name = #{name}</if>
+            <if test="nature != null and nature != ''">og_nature = #{nature}</if>
+            <if test="endTime != null">og_endTime = #{endTime}</if>
+            <if test="email != null and email != ''">og_email = #{email}</if>
+            <if test="address != null and address != ''">og_add = #{address}</if>
+        </where>
+    </select>
+
+    <update id="updateOrganizations" parameterType="Organization">
+        update organization
+        <set>
+            <if test="name != null and name != '' ">og_name = #{name}</if>
+            <if test="nature != null and nature != ''">og_nature = #{nature}</if>
+            <if test="endTime != null">og_endTime = #{endTime}</if>
+            <if test="email != null and email != ''">og_email = #{email}</if>
+            <if test="address != null and address != ''">og_add = #{address}</if>
+            update_time = current_timestamp
+        </set>
+    </update>
+
+    <delete id="deleteOrganization" parameterType="Organization">
+        delete from organization
+        <where>
+            <choose>
+                <when test="id != null and id > 0">og_id = #{id}</when>
+                <when test="name != null and name != ''">og_name = #{name}</when>
+                <when test="nature != null and nature != ''">og_nature = #{nature}</when>
+                <when test="endTime != null">og_endTime = #{endTime}</when>
+                <when test="email != null and email != ''">og_email = #{email}</when>
+                <when test="address != null and address != ''">og_add = #{address}</when>
+            </choose>
+        </where>
+    </delete>
+
+    <insert id="addOrganization" parameterType="Organization">
+        insert into Organization(og_name, og_nature, og_endtime, og_email, og_add)
+        values(#{name}, #{nature}, #{endTime}, #{email}, #{address}, current_timestamp )
+    </insert>
+
+</mapper>

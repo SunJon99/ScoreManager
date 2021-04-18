@@ -2,21 +2,18 @@ package com.sunjon.ScoreManager.bean;
 
 import org.apache.ibatis.type.Alias;
 
-/**
- * 班级
- */
-@Alias("Grade")
-public class Grade {
-    private Integer id; //班级编号
-    private String name; //班级名称
-    private Integer dpID; //学院编号
+@Alias("Department")
+public class Department {
+    private Integer id;//学院编号
+    private String name;//学院名称
+    private Integer ogID;//组织编号
 
-    public Grade(){}
+    public Department(){}
 
-    public Grade(Integer id, String name, Integer dpID) {
+    public Department(Integer id, String name, Integer ogID) {
         this.id = id;
         this.name = name;
-        this.dpID = dpID;
+        this.ogID = ogID;
     }
 
     public Integer getId() {
@@ -35,20 +32,20 @@ public class Grade {
         this.name = name;
     }
 
-    public Integer getDpID() {
-        return dpID;
+    public Integer getOgID() {
+        return ogID;
     }
 
-    public void setDpID(Integer dpID) {
-        this.dpID = dpID;
+    public void setOgID(Integer ogID) {
+        this.ogID = ogID;
     }
 
     @Override
     public String toString() {
-        return "Grade{" +
+        return "Department{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", dpID=" + dpID +
+                ", ogID=" + ogID +
                 '}';
     }
 }

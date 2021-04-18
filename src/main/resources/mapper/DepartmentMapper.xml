@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunjon.ScoreManager.mapper.DepartmentMapper">
+    <resultMap id="DepartmentMap" type="Department">
+        <id property="id" column="dp_id"/>
+        <result property="name" column="dp_name"/>
+        <result property="ogID" column="og_id"/>
+    </resultMap>
+
+    <select id="findAllDepartments" resultMap="DepartmentMap">
+        select dp_id,dp_name,og_id
+        from department
+    </select>
+
+    <select id="findDepartments" parameterType="Department" resultType="DepartmentMap">
+        select dp_id,dp_name,og_id from department
+        <where>
+            <if test="id != null and id > 0">dp_id = #{id}</if>
+            <if test="name != null and name != ''">dp_name = #{name}</if>
+            <if test="ogID != null and ogID > 0 ">og_id = #{ogID}</if>
+        </where>
+    </select>
+
+    <update id="updateDepartment" parameterType="Department">
+        update department
+        <set>
+            <if test="name != null and name != '' ">dp_name = #{name}</if>
+            <if test="ogID != null and ogID > 0 ">og_id = #{ogID}</if>
+            update_time = current_timestamp
+        </set>
+    </update>
+
+    <delete id="deleteDepartment" parameterType="Department">
+        delete from department
+        <where>
+            <choose>
+                <when test="id != null and id >0">dp_id = #{id}</when>
+                <when test="name != null and name != ''">dp_name = #{name}</when>
+                <when test="ogID != null and ogID > 0">og_id = #{ogID}</when>
+            </choose>
+        </where>
+    </delete>
+
+    <insert id="addDepartment" parameterType="Department">
+        insert into department(dp_name, og_id)
+        values(#{name}, #{ogID},current_timestamp )
+    </insert>
+</mapper>

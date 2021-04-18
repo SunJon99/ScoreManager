@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunjon.ScoreManager.mapper.GradeMapper">
+    <resultMap id="GradeMap" type="Grade">
+        <id property="id" column="cl_id"/>
+        <result property="name" column="cl_name"/>
+        <result property="dpID" column="dp_id"/>
+    </resultMap>
+
+    <select id="findAllGrades" resultMap="GradeMap">
+        select cl_id,cl_name,dp_id
+        from class
+    </select>
+
+    <select id="findGrades" parameterType="Grade" resultType="GradeMap">
+        select cl_id,cl_name,dp_id from class
+        <where>
+            <if test="id != null and id > 0">cl_id = #{id}</if>
+            <if test="name != null and name != ''">cl_name = #{name}</if>
+            <if test="dpID != null and dpID > 0 ">dp_id = #{dpID}</if>
+        </where>
+    </select>
+
+    <update id="updateGrade" parameterType="Grade">
+        update class
+        <set>
+            <if test="name != null and name != '' ">cl_name = #{name}</if>
+            <if test="dpID != null and dpID > 0 ">dp_id = #{dpID}</if>
+            update_time = current_timestamp
+        </set>
+    </update>
+
+    <delete id="deleteGrade" parameterType="Grade">
+        delete from class
+        <where>
+            <choose>
+                <when test="id != null and id >0">cl_id = #{id}</when>
+                <when test="name != null and name != ''">cl_name = #{name}</when>
+                <when test="dpID != null and dpID > 0">dp_id = #{dpID}</when>
+            </choose>
+        </where>
+    </delete>
+
+    <insert id="addGrade" parameterType="Grade">
+        insert into class(cl_name, dp_id)
+        values(#{name}, #{dpID},current_timestamp )
+    </insert>
+
+</mapper>
