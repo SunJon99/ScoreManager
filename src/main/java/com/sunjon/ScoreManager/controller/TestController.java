@@ -1,10 +1,8 @@
 package com.sunjon.ScoreManager.controller;
 
-import com.sunjon.ScoreManager.bean.Authority;
-import com.sunjon.ScoreManager.bean.Lesson;
+
 import com.sunjon.ScoreManager.bean.Organization;
-import com.sunjon.ScoreManager.mapper.AuthorityMapper;
-import com.sunjon.ScoreManager.mapper.LessonMapper;
+
 import com.sunjon.ScoreManager.mapper.OrganizationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,17 +28,17 @@ public class TestController {
     @ResponseBody
     public List<Organization> test(){
         Organization organization = new Organization();
-        organization.setId(4);
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
         Date t = null;
         try{
-            t = ft.parse("2022-01-01");
+            t = ft.parse("2023-01-01");
         } catch (ParseException e) {
             e.printStackTrace();
         }
         organization.setEndTime(t);
-        List<Organization> list = organizationMapper.findOrganizations(organization);
-        return list;
+        organizationMapper.updateOrganization(organization);
+
+        return organizationMapper.findAllOrganizations();
     }
 
 }

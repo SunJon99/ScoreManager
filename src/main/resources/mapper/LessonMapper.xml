@@ -21,7 +21,7 @@
             <if test="name != null and name != ''">ls_name=#{name},</if>
             <if test="credit != null and credit > 0">ls_credit=#{credit},</if>
             <if test="time != null and time != ''">ls_time=#{time},</if>
-            update_time = current_timestamp
+            update_time = current_timestap
         </set>
     </update>
 

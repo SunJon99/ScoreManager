@@ -30,14 +30,14 @@
         </where>
     </select>
 
-    <update id="updateOrganizations" parameterType="Organization">
+    <update id="updateOrganization" parameterType="Organization">
         update organization
         <set>
-            <if test="name != null and name != '' ">og_name = #{name}</if>
-            <if test="nature != null and nature != ''">og_nature = #{nature}</if>
-            <if test="endTime != null">og_endTime = #{endTime}</if>
-            <if test="email != null and email != ''">og_email = #{email}</if>
-            <if test="address != null and address != ''">og_add = #{address}</if>
+            <if test="name != null and name != '' ">og_name = #{name},</if>
+            <if test="nature != null and nature != ''">og_nature = #{nature},</if>
+            <if test="endTime != null">og_endTime = #{endTime},</if>
+            <if test="email != null and email != ''">og_email = #{email},</if>
+            <if test="address != null and address != ''">og_add = #{address},</if>
             update_time = current_timestamp
         </set>
     </update>

@@ -27,8 +27,8 @@
     <update id="updateGrade" parameterType="Grade">
         update class
         <set>
-            <if test="name != null and name != '' ">cl_name = #{name}</if>
-            <if test="dpID != null and dpID > 0 ">dp_id = #{dpID}</if>
+            <if test="name != null and name != '' ">cl_name = #{name},</if>
+            <if test="dpID != null and dpID > 0 ">dp_id = #{dpID},</if>
             update_time = current_timestamp
         </set>
     </update>

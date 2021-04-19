@@ -27,8 +27,8 @@
     <update id="updateDepartment" parameterType="Department">
         update department
         <set>
-            <if test="name != null and name != '' ">dp_name = #{name}</if>
-            <if test="ogID != null and ogID > 0 ">og_id = #{ogID}</if>
+            <if test="name != null and name != '' ">dp_name = #{name},</if>
+            <if test="ogID != null and ogID > 0 ">og_id = #{ogID},</if>
             update_time = current_timestamp
         </set>
     </update>
