@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 课程目标管理
  */
-public interface LessonGoalManager {
+public interface LessonGoalService {
 
     /**
      * 课程目标添加

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 管理课程信息
  */
-public interface LessonManager {
+public interface LessonService {
     /**
      * 添加课程信息
      */

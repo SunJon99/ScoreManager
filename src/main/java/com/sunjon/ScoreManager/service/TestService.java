@@ -5,7 +5,7 @@ import com.sunjon.ScoreManager.bean.Test;
 
 import java.util.List;
 
-public interface TestManager {
+public interface TestService {
     /**
      * 考核项目添加
      */

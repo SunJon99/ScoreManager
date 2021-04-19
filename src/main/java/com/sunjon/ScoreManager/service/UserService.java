@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 用户管理服务（包括系统管理员、机构管理员、学院管理员、教师、学生）
  */
-public interface UserManageService {
+public interface UserService {
 
     /**
      * 用户信息查询

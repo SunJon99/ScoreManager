@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 考核类型管理
  */
-public interface TestTypeManager {
+public interface TestTypeService {
     /**
      * 考核类型添加
      */

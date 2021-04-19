@@ -7,7 +7,7 @@ import com.sunjon.ScoreManager.bean.Teacher;
 
 import java.util.List;
 
-public interface LessonRelationManager {
+public interface LessonRelationService {
     /**
      * 课程关系添加
      */
