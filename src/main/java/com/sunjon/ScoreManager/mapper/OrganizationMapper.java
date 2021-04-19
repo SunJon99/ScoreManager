@@ -16,7 +16,7 @@ public interface OrganizationMapper {
      * 组织信息查询
      */
     List<Organization> findAllOrganizations();
-    List<Organization> finsOrganizations(Organization conditions);
+    List<Organization> findOrganizations(Organization conditions);
     /**
      * 组织信息修改
      */

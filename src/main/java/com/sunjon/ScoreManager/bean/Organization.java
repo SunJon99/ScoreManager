@@ -1,4 +1,5 @@
 package com.sunjon.ScoreManager.bean;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
@@ -7,6 +8,7 @@ public class Organization {
     private Integer id;//组织编号
     private String name;//组织名称
     private String nature;//组织属性
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date endTime;//注册有效期
     private String email;//注册邮箱
     private String address;//地址

@@ -14,18 +14,19 @@
 
     <select id="findAllOrganizations" resultMap="OrganizationMap">
         select og_id,og_name,og_nature,og_endtime,og_email,og_add
-        from class
+        from organization
     </select>
 
-    <select id="findOrganizations" parameterType="Organization" resultType="OrganizationMap">
+    <select id="findOrganizations" parameterType="Organization" resultMap="OrganizationMap">
         select og_id,og_name,og_nature,og_endtime,og_email,og_add from organization
         <where>
-            <if test="id != null and id > 0">og_id = #{id}</if>
-            <if test="name != null and name != ''">og_name = #{name}</if>
-            <if test="nature != null and nature != ''">og_nature = #{nature}</if>
-            <if test="endTime != null">og_endTime = #{endTime}</if>
-            <if test="email != null and email != ''">og_email = #{email}</if>
-            <if test="address != null and address != ''">og_add = #{address}</if>
+            1>0
+            <if test="id != null and id > 0">and og_id = #{id}</if>
+            <if test="name != null and name != ''">and og_name = #{name}</if>
+            <if test="nature != null and nature != ''">and og_nature = #{nature}</if>
+            <if test="endTime != null">and og_endTime = #{endTime}</if>
+            <if test="email != null and email != ''">and og_email = #{email}</if>
+            <if test="address != null and address != ''">and og_add = #{address}</if>
         </where>
     </select>
 
@@ -51,6 +52,7 @@
                 <when test="endTime != null">og_endTime = #{endTime}</when>
                 <when test="email != null and email != ''">og_email = #{email}</when>
                 <when test="address != null and address != ''">og_add = #{address}</when>
+                <otherwise>og_id = -1</otherwise>
             </choose>
         </where>
     </delete>

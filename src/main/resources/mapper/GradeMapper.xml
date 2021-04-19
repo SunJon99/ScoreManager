@@ -14,12 +14,13 @@
         from class
     </select>
 
-    <select id="findGrades" parameterType="Grade" resultType="GradeMap">
+    <select id="findGrades" parameterType="Grade" resultMap="GradeMap">
         select cl_id,cl_name,dp_id from class
         <where>
-            <if test="id != null and id > 0">cl_id = #{id}</if>
-            <if test="name != null and name != ''">cl_name = #{name}</if>
-            <if test="dpID != null and dpID > 0 ">dp_id = #{dpID}</if>
+            1>0
+            <if test="id != null and id > 0">and cl_id = #{id}</if>
+            <if test="name != null and name != ''">and cl_name = #{name}</if>
+            <if test="dpID != null and dpID > 0 ">and dp_id = #{dpID}</if>
         </where>
     </select>
 
@@ -39,6 +40,7 @@
                 <when test="id != null and id >0">cl_id = #{id}</when>
                 <when test="name != null and name != ''">cl_name = #{name}</when>
                 <when test="dpID != null and dpID > 0">dp_id = #{dpID}</when>
+                <otherwise>cl_id = -1</otherwise>
             </choose>
         </where>
     </delete>

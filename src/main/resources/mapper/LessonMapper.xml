@@ -31,6 +31,7 @@
             <when test="id != null and id > 0">ls_id = #{id}</when>
             <when test="name != null and name != ''">ls_name = #{name}</when>
             <when test="time != null and time != ''">ls_time = #{time}</when>
+            <otherwise>ls_id = -1</otherwise>
         </choose>
     </delete>
 

@@ -14,12 +14,13 @@
         from department
     </select>
 
-    <select id="findDepartments" parameterType="Department" resultType="DepartmentMap">
+    <select id="findDepartments" parameterType="Department" resultMap="DepartmentMap">
         select dp_id,dp_name,og_id from department
         <where>
-            <if test="id != null and id > 0">dp_id = #{id}</if>
-            <if test="name != null and name != ''">dp_name = #{name}</if>
-            <if test="ogID != null and ogID > 0 ">og_id = #{ogID}</if>
+            1>0
+            <if test="id != null and id > 0">and dp_id = #{id}</if>
+            <if test="name != null and name != ''">and dp_name = #{name}</if>
+            <if test="ogID != null and ogID > 0 ">and og_id = #{ogID}</if>
         </where>
     </select>
 
@@ -39,6 +40,7 @@
                 <when test="id != null and id >0">dp_id = #{id}</when>
                 <when test="name != null and name != ''">dp_name = #{name}</when>
                 <when test="ogID != null and ogID > 0">og_id = #{ogID}</when>
+                <otherwise>dp_id = -1</otherwise>
             </choose>
         </where>
     </delete>

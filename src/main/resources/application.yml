@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/susan_base
+    url: jdbc:postgresql://localhost:5432/susan_base?TimeZone=Asia/Shanghai
     username: susan
     password: susan@ht2013
     driver-class-name: org.postgresql.Driver
