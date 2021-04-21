@@ -1,5 +1,8 @@
 package com.sunjon.ScoreManager.bean;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("Teacher")
 public class Teacher extends User{
     private String title;//教师职称
     private Integer dpID;//所属学院ID

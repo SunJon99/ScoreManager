@@ -5,12 +5,11 @@
 
 -  gradeMapper
 -  departmentMapper
-- organizationMapper
 
 
 #### 已测试
 
-
+- OrganizationMapper
 - LessonMapper
 
 ---

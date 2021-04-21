@@ -19,3 +19,5 @@
     String strNow = sf.format(now);
     System.out.println(strNow)
 ```
+
+## 2. 开发中一定要多看系统设计，避免不必要的时间浪费

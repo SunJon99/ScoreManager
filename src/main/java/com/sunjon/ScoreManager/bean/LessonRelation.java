@@ -1,10 +1,13 @@
 package com.sunjon.ScoreManager.bean;
 
+import org.apache.ibatis.type.Alias;
+
 import java.util.List;
 
 /**
  * 课程关系
  */
+@Alias("LessonRelation")
 public class LessonRelation {
     private Lesson lesson; //课程
     private List<Teacher> teachers; //课程对应的教师

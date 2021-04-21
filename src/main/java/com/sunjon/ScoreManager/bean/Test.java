@@ -1,5 +1,8 @@
 package com.sunjon.ScoreManager.bean;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("Test")
 public class Test {
     private Integer id; //考核项目ID
     private String name; //考核项目名称
