@@ -4,6 +4,8 @@ spring:
     username: susan
     password: susan@ht2013
     driver-class-name: org.postgresql.Driver
+  thymeleaf:
+    cache: false
 mybatis:
   mapper-locations: mapper/*.xml
   type-aliases-package: com.sunjon.ScoreManager.bean

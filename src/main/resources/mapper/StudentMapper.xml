@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunjon.ScoreManager.mapper.StudentMapper">
+    <resultMap id="StudentMap" type="Student">
+        <id property="id" column="st_id"/>
+        <result property="name" column="st_name"/>
+        <result property="email" column="st_email"/>
+        <result property="gender" column="st_gender"/>
+        <result property="classID" column="cl_id"/>
+        <association property="passWord" javaType="PassWord">
+            <result property="hashPwd" column="st_pwd"/>
+            <result property="salt" column="st_salt"/>
+        </association>
+    </resultMap>
+
+    <select id="findAllStudents" resultMap="StudentMap">
+        select st_id,st_name,st_gender,st_salt,st_pwd,st_email,cl_id
+        from student
+    </select>
+
+    <select id="findStudents" parameterType="Student" resultMap="StudentMap">
+        select st_id,st_name,st_gender,st_salt,st_pwd,st_email,cl_id from student
+        <where>
+            1>0
+            <if test="id != null and id > 0">and st_id = #{id}</if>
+            <if test="name != null and name != ''">and st_name = #{name}</if>
+            <if test="gender != null and gender != '' ">and st_gender = #{gender}</if>
+            <if test="classID != null and classID > 0 ">and cl_id = #{classID}</if>
+        </where>
+    </select>
+
+    <update id="updateStudent" parameterType="Student">
+        update student
+        <set>
+            <if test="name != null and name != '' ">st_name = #{name},</if>
+            <if test="classID != null and classID > 0 ">cl_id = #{classID},</if>
+            <if test="gender != null and gender != '' ">st_gender = #{gender},</if>
+            <if test="email != null and email != '' ">st_email = #{email},</if>
+            <if test="passWord != null">st_pwd = #{passWord.hashPwd},st_salt = #{passWord.salt},</if>
+            update_time = current_timestamp
+        </set>
+    </update>
+
+    <delete id="deleteStudent" parameterType="Student">
+        delete from student
+        <where>
+            <choose>
+                <when test="id != null and id >0">st_id = #{id}</when>
+                <when test="name != null and name != ''">st_name = #{name}</when>
+                <otherwise>st_id = -1</otherwise>
+            </choose>
+        </where>
+    </delete>
+
+    <insert id="addStudent" parameterType="Student">
+        insert into student(st_id,st_name,st_gender,st_salt,st_pwd,st_email,cl_id,update_time)
+        values(#{id},#{name}, #{gender},#{passWord.salt},#{passWord.hashPwd},#{email},#{classID},current_timestamp )
+    </insert>
+</mapper>

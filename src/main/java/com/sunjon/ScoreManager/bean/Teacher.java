@@ -9,8 +9,8 @@ public class Teacher extends User{
 
     public Teacher(){super();}
 
-    public Teacher(Integer id, String name, String authority, String email, String title, Integer dpID) {
-        super(id, name, authority, email);
+    public Teacher(Integer id, String name, String email, PassWord passWord, String title, Integer dpID) {
+        super(id, name, email, passWord);
         this.title = title;
         this.dpID = dpID;
     }

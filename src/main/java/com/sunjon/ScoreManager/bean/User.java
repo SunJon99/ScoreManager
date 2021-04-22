@@ -4,16 +4,16 @@ public class User {
 
     private Integer id;   //用户编号
     private String name;   //用户姓名
-    private String authority; //用户角色
     private String email; //用户邮箱
+    private PassWord passWord; //用户密码信息
 
     public User(){}
 
-    public User(Integer id, String name, String authority, String email) {
+    public User(Integer id, String name, String email, PassWord passWord) {
         this.id = id;
         this.name = name;
-        this.authority = authority;
         this.email = email;
+        this.passWord = passWord;
     }
 
     public Integer getId() {
@@ -32,14 +32,6 @@ public class User {
         this.name = name;
     }
 
-    public String getAuthority() {
-        return authority;
-    }
-
-    public void setAuthority(String authority) {
-        this.authority = authority;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -48,13 +40,21 @@ public class User {
         this.email = email;
     }
 
+    public PassWord getPassWord() {
+        return passWord;
+    }
+
+    public void setPassWord(PassWord passWord) {
+        this.passWord = passWord;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", authority='" + authority + '\'' +
                 ", email='" + email + '\'' +
+                ", passWord=" + passWord +
                 '}';
     }
 }

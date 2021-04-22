@@ -1,11 +1,15 @@
 package com.sunjon.ScoreManager.util;
 
+import com.sunjon.ScoreManager.bean.PassWord;
+import org.springframework.stereotype.Component;
+
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+@Component
 public class PwdHandler  {
 
     public PwdHandler(){}
