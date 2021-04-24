@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class TemplatesRouter {
-    @RequestMapping("/login")
+  /*  @RequestMapping("/login")
     public String login(HttpSession session, RedirectAttributes attributes){
         return "login";
     }
@@ -16,7 +16,7 @@ public class TemplatesRouter {
     @RequestMapping("/stuIndex")
     public String stuIndex(){
         return "stuIndex";
-    }
+    }*/
 
 
 }
