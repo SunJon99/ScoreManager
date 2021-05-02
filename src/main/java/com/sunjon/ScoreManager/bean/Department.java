@@ -6,14 +6,16 @@ import org.apache.ibatis.type.Alias;
 public class Department {
     private Integer id;//学院编号
     private String name;//学院名称
-    private Integer ogID;//组织编号
+    private Integer stNum;//学院学生人数
+    private Integer tcNum;//学院教师人数
 
     public Department(){}
 
-    public Department(Integer id, String name, Integer ogID) {
+    public Department(Integer id, String name, Integer stNum, Integer tcNum) {
         this.id = id;
         this.name = name;
-        this.ogID = ogID;
+        this.stNum = stNum;
+        this.tcNum = tcNum;
     }
 
     public Integer getId() {
@@ -32,20 +34,19 @@ public class Department {
         this.name = name;
     }
 
-    public Integer getOgID() {
-        return ogID;
+    public Integer getStNum() {
+        return stNum;
     }
 
-    public void setOgID(Integer ogID) {
-        this.ogID = ogID;
+    public void setStNum(Integer stNum) {
+        this.stNum = stNum;
     }
 
-    @Override
-    public String toString() {
-        return "Department{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", ogID=" + ogID +
-                '}';
+    public Integer getTcNum() {
+        return tcNum;
+    }
+
+    public void setTcNum(Integer tcNum) {
+        this.tcNum = tcNum;
     }
 }

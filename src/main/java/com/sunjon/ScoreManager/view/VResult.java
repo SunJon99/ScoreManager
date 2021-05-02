@@ -1,4 +1,4 @@
-package com.sunjon.ScoreManager.bean;
+package com.sunjon.ScoreManager.view;
 
 public class VResult {
     private Integer code;

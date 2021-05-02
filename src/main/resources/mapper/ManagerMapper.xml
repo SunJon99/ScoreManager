@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunjon.ScoreManager.mapper.ManagerMapper">
+    <resultMap id="ManagerMap" type="Manager">
+        <id property="id" column="dm_id"/>
+        <result property="name" column="dm_name"/>
+        <result property="email" column="dm_email"/>
+        <result property="organization" column="dp_name"/>
+    </resultMap>
+
+    <select id="findAllManagers" resultMap="ManagerMap">
+        select dm_id,dm_name,dm_email,dp_name
+        from dp_manager,department
+        where dp_manager.dp_id = department.dp_id;
+    </select>
+
+</mapper>

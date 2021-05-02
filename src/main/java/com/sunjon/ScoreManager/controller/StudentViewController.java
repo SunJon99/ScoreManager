@@ -5,25 +5,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-public class ViewController {
+public class StudentViewController {
 
-    @RequestMapping("/index")
-    public String index(){
-        return "index";
+    /**
+     * 响应学生首页
+     * @return
+     */
+    @RequestMapping("/student-index")
+    public String studentIndex(){
+        return "student/student-index";
     }
 
-    @RequestMapping("/login")
-    public String login(){
-        return "login";
-    }
+
     @RequestMapping("/my-score")
     public String myScore(){
-        return "my-score";
+        return "student/my-score";
     }
 
-    @RequestMapping("/score")
+    @RequestMapping("/my-info")
     public String score(){
-        return "score";
+        return "student/my-info";
     }
 
     @RequestMapping("/score-account")
@@ -71,8 +72,5 @@ public class ViewController {
         return "student-edit";
     }
 
-    @RequestMapping("/student-index")
-    public String studentIndex(){
-        return "student-index";
-    }
+
 }

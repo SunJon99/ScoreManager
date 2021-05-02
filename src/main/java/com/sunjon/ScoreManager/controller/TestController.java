@@ -4,8 +4,8 @@ package com.sunjon.ScoreManager.controller;
 
 import com.sunjon.ScoreManager.bean.PassWord;
 import com.sunjon.ScoreManager.bean.Student;
-import com.sunjon.ScoreManager.bean.VResult;
-import com.sunjon.ScoreManager.bean.VUser;
+import com.sunjon.ScoreManager.view.VResult;
+import com.sunjon.ScoreManager.view.VUser;
 import com.sunjon.ScoreManager.mapper.StudentMapper;
 import com.sunjon.ScoreManager.service.impl.PwdServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +34,8 @@ public class TestController {
     @ResponseBody
     @RequestMapping("/add")
     public String addStudent(){
-        PassWord passWord = pwdService.Generate("sunjon");
-        Student su = new Student(1,"sunjon","sunjon529@gmail.com",passWord,"男",1);
+        PassWord passWord = pwdService.Generate("golang");
+        Student su = new Student(1,"golang","sunjon529@gmail.com",passWord,"男",1);
         try{
             studentMapper.addStudent(su);
         }catch (Exception e){

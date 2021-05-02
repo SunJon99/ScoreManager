@@ -55,7 +55,16 @@
     </delete>
 
     <insert id="addStudent" parameterType="Student">
-        insert into student(st_id,st_name,st_gender,st_salt,st_pwd,st_email,cl_id,update_time)
-        values(#{id},#{name}, #{gender},#{passWord.salt},#{passWord.hashPwd},#{email},#{classID},current_timestamp )
+        insert into student(st_name,st_gender,st_salt,st_pwd,st_email,update_time)
+        values(#{name}, #{gender},#{passWord.salt},#{passWord.hashPwd},#{email},current_timestamp )
     </insert>
+
+    <select id="countStudentByClass" parameterType="Integer" resultType="Integer">
+        select count(*)
+        from student
+        where cl_id = #{classID}
+    </select>
+
+
+
 </mapper>

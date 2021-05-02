@@ -1,6 +1,6 @@
 package com.sunjon.ScoreManager.controller;
 
-import com.sunjon.ScoreManager.bean.VResult;
+import com.sunjon.ScoreManager.view.VResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

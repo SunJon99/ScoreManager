@@ -1,4 +1,4 @@
-package com.sunjon.ScoreManager.bean;
+package com.sunjon.ScoreManager.view;
 
 import org.springframework.stereotype.Component;
 

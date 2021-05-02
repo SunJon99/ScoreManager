@@ -16,11 +16,6 @@ public interface DepartmentMapper {
      * 学院信息查询
      */
     List<Department> findAllDepartments();
-    List<Department> findDepartments(Department conditions);
-    /**
-     * 学院信息修改
-     */
-    void updateDepartment(Department department);
     /**
      * 学院信息的删除
      */
@@ -29,4 +24,11 @@ public interface DepartmentMapper {
      * 学院信息添加
      */
     void addDepartment(Department department);
+
+
+    //统计学院学生数量
+    Integer countStudent(Integer dpID);
+
+    //统计学院教师数量
+    Integer countTeacher(Integer dpID);
 }

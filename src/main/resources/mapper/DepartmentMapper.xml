@@ -6,47 +6,43 @@
     <resultMap id="DepartmentMap" type="Department">
         <id property="id" column="dp_id"/>
         <result property="name" column="dp_name"/>
-        <result property="ogID" column="og_id"/>
     </resultMap>
 
     <select id="findAllDepartments" resultMap="DepartmentMap">
-        select dp_id,dp_name,og_id
-        from department
+        select dp_id,dp_name
+        from department where delete_time is null
     </select>
 
-    <select id="findDepartments" parameterType="Department" resultMap="DepartmentMap">
-        select dp_id,dp_name,og_id from department
-        <where>
-            1>0
-            <if test="id != null and id > 0">and dp_id = #{id}</if>
-            <if test="name != null and name != ''">and dp_name = #{name}</if>
-            <if test="ogID != null and ogID > 0 ">and og_id = #{ogID}</if>
-        </where>
-    </select>
 
-    <update id="updateDepartment" parameterType="Department">
+<!--不会在数据库中删除一个学院，只是将delete_time改为非空-->
+    <update id="deleteDepartment" parameterType="Department">
         update department
-        <set>
-            <if test="name != null and name != '' ">dp_name = #{name},</if>
-            <if test="ogID != null and ogID > 0 ">og_id = #{ogID},</if>
-            update_time = current_timestamp
-        </set>
-    </update>
-
-    <delete id="deleteDepartment" parameterType="Department">
-        delete from department
+        set delete_time = current_timestamp
         <where>
             <choose>
-                <when test="id != null and id >0">dp_id = #{id}</when>
-                <when test="name != null and name != ''">dp_name = #{name}</when>
-                <when test="ogID != null and ogID > 0">og_id = #{ogID}</when>
+                <when test="id != null and id > 0">dp_id = #{id}</when>
                 <otherwise>dp_id = -1</otherwise>
             </choose>
         </where>
-    </delete>
-
+    </update>
+<!--添加一个学院-->
     <insert id="addDepartment" parameterType="Department">
-        insert into department(dp_name, og_id)
-        values(#{name}, #{ogID},current_timestamp )
+        insert into department(dp_name,create_time)
+        values(#{name},current_timestamp )
     </insert>
+
+<!--统计学院中学生的数量-->
+    <select id="countStudent" parameterType="Integer" resultType="Integer">
+        select count(st_id)
+        from student
+        where cl_id in (select cl_id from class where dp_id = #{dpID})
+    </select>
+
+<!--统计学院中教师的数量-->
+    <select id="countTeacher" parameterType="Integer" resultType="Integer">
+        select count(tc_id)
+        from teacher
+        where dp_id = #{dpID}
+    </select>
+
 </mapper>
