@@ -1,20 +1,20 @@
 package com.sunjon.ScoreManager.view;
 
-import com.sunjon.ScoreManager.bean.Manager;
+import com.sunjon.ScoreManager.bean.Teacher;
 
 import java.util.List;
 
-public class ManagerList {
+public class TeacherList {
     private Integer code;
-    private List<Manager> data;
+    private List<Teacher> data;
     private Integer count;
 
-    public ManagerList(){}
+    public TeacherList(){}
 
-    public ManagerList(Integer code, List<Manager> data) {
+    public TeacherList(Integer code, List<Teacher> data, Integer count) {
         this.code = code;
         this.data = data;
-        this.count = data.size();
+        this.count = count;
     }
 
     public Integer getCode() {
@@ -25,11 +25,11 @@ public class ManagerList {
         this.code = code;
     }
 
-    public List<Manager> getData() {
+    public List<Teacher> getData() {
         return data;
     }
 
-    public void setData(List<Manager> data) {
+    public void setData(List<Teacher> data) {
         this.data = data;
     }
 

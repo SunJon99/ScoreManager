@@ -13,7 +13,73 @@
     <select id="findAllManagers" resultMap="ManagerMap">
         select dm_id,dm_name,dm_email,dp_name
         from dp_manager,department
-        where dp_manager.dp_id = department.dp_id;
+        where dp_manager.dp_id = department.dp_id and dp_manager.delete_time is null;
     </select>
+
+    <select id="findManagersByPage" resultMap="ManagerMap">
+        select dm_id,dm_name,dm_email,dp_name
+        from dp_manager,department
+        where dp_manager.dp_id = department.dp_id and dp_manager.delete_time is null
+        LIMIT #{limit} offset #{start}
+    </select>
+
+    <select id="countManagers" resultType="Integer">
+        select count(dm_id)
+        from dp_manager
+        where delete_time is null
+    </select>
+
+    <select id="findManagersByName" resultMap="ManagerMap">
+        select dm_id,dm_name,dm_email,dp_name
+        from dp_manager,department
+        <where>
+            dp_manager.dp_id = department.dp_id
+            and dp_manager.delete_time is null
+            <if test="name != null and name != ''">
+                and dp_manager.dm_name like '%'||#{name}||'%'
+            </if>
+        </where>
+        limit #{limit} offset #{start}
+
+    </select>
+
+    <insert id="addManager" parameterType="java.util.Map">
+        insert into dp_manager (
+            dm_name,dm_salt,dm_pwd,dm_email,dp_id,create_time
+        )
+        values(
+            #{name},#{salt},#{pwd},#{email},#{dpID},current_timestamp
+        )
+    </insert>
+
+<!--    更新学院管理员信息-->
+    <update id="updateManager" parameterType="Manager">
+        update dp_manager
+        <set>
+            update_time = current_timestamp
+            <if test="email != null and email != ''">,dm_email = #{email}</if>
+        </set>
+        <where>
+             <choose>
+                 <when test="id != null and id > 0">dm_id = #{id}</when>
+                 <when test="name != null and name != ''">dm_name = #{name}</when>
+                 <otherwise>dm_id = -1</otherwise>
+             </choose>
+        </where>
+    </update>
+
+    <update id="deleteManager" parameterType="Manager">
+        update dp_manager
+        <set>
+            delete_time = current_timestamp
+        </set>
+        <where>
+            <choose>
+                <when test="id != null and id > 0">dm_id = #{id}</when>
+                <when test="name != null and name != ''">dm_name = #{name}</when>
+                <otherwise>dm_id = -1</otherwise>
+            </choose>
+        </where>
+    </update>
 
 </mapper>

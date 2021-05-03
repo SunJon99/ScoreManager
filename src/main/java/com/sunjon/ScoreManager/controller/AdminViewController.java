@@ -30,4 +30,19 @@ public class AdminViewController {
     public String managerList(){
         return "admin/manager-list";
     }
+
+    @RequestMapping("/manager-add")
+    public String managerAdd(){
+        return "admin/manager-add";
+    }
+
+    @RequestMapping("/manager-edit")
+    public String managerEdit(){
+        return "admin/manager-edit";
+    }
+
+    @RequestMapping("/teacher-list")
+    public String teacherList(){
+        return "admin/teacher-list";
+    }
 }

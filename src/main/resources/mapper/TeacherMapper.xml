@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunjon.ScoreManager.mapper.TeacherMapper">
+    <resultMap id="TeacherMap" type="Teacher">
+        <id property="id" column="tc_id"/>
+        <result property="name" column="tc_name"/>
+        <result property="title" column="tc_title"/>
+        <result property="email" column="tc_email"/>
+        <result property="department" column="dp_name"/>
+        <result property="dpID" column="dp_id"/>
+    </resultMap>
+
+    <select id="findAllTeachersByPage" resultMap="TeacherMap">
+        select
+               teacher.tc_id,
+               teacher.tc_name,
+               teacher.tc_title,
+               teacher.tc_email,
+               department.dp_id,
+               department.dp_name
+        from teacher,department
+        where
+            teacher.dp_id = department.dp_id
+            and teacher.delete_time is null
+        limit #{limit} offset #{start}
+    </select>
+
+    <select id="countTeachers" resultType="Integer">
+        select
+            count(tc_id)
+        from teacher
+        where
+            teacher.delete_time is null
+    </select>
+
+
+</mapper>

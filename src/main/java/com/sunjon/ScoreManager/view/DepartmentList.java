@@ -25,6 +25,10 @@ public class DepartmentList {
         return count;
     }
 
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
     public Integer getCode() {
         return code;
     }
@@ -39,6 +43,5 @@ public class DepartmentList {
 
     public void setData(List<Department> data) {
         this.data = data;
-        this.count = this.data.size();
     }
 }
