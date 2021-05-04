@@ -14,8 +14,8 @@
 </head>
 
 <body>
-<div class="page-content-wrap" id="ManagerInfo">
-  <h5 style="text-align:center;font-size: 20px;line-height: 25px;color:#666">教师信息管理界面</h5>
+<div class="page-content-wrap" id="classInfo">
+  <h5 style="text-align:center;font-size: 20px;line-height: 25px;color:#666">班级信息管理界面</h5>
   <hr>
   <div class="layui-form-item">
     <div class="layui-inline tool-btn">
@@ -25,21 +25,19 @@
       </button>
     </div>
     <div class="layui-inline">
-      <input type="text" id="searchConditon" placeholder="请输入教师姓名"
+      <input type="text" id="searchConditon" placeholder="请输入班级名称"
              autocomplete="off" class="layui-input">
     </div>
     <button class="layui-btn layui-btn-normal site-demo-active"
-            data-type="search" id="searchTeacher">搜索</button>
+            data-type="search" id="searchManager">搜索</button>
     <table class="layui-table"
-           lay-data="{ url:'/teacher/getAllTeachers', page:true, id:'infoTable'}"
+           lay-data="{ url:'/class/getAllClasses', page:true, id:'infoTable'}"
            lay-filter="demo">
       <thead>
       <tr>
         <th lay-data="{type:'checkbox', }"></th>
-        <th lay-data="{field:'id',sort: true}">教师编号</th>
-        <th lay-data="{field:'name'}">姓名</th>
-        <th lay-data="{field:'title'}">职称</th>
-        <th lay-data="{field:'email'}">邮箱</th>
+        <th lay-data="{field:'id',sort: true}">班级编号</th>
+        <th lay-data="{field:'name'}">名称</th>
         <th lay-data="{field:'department'}">所属学院</th>
         <th
                 lay-data="{fixed: 'right', minwidth:220, align:'left', toolbar: '#barDemo'}"></th>
@@ -69,21 +67,21 @@
     table.on('tool(demo)', function(obj) {
       var data = obj.data;
       if (obj.event === 'del') {
-        layer.confirm('真的删除这个教师信息吗？', function(index) {
+        layer.confirm('真的删除这个班级信息吗？', function(index) {
           var data = obj.data;
           $.ajax({
             //几个参数需要注意一下
             type: "POST",//方法类型
             dataType: "json",//预期服务器返回的数据类型
-            url: "/teacher/deleteTeacher",//url
+            url: "/class/deleteClass",//url
             data: data,
             success: function (result) {
               if (result.code == "0") {
                 layer.close(index);
-                layer.msg('删除成绩成功');
+                layer.msg('删除班级成功');
                 layui.table.reload('infoTable',{page:{curr:1}});
               }else{
-                layer.msg('删除成绩失败', {
+                layer.msg('删除班级失败', {
                   icon: 5
                 });
               }
@@ -98,9 +96,9 @@
       }
       if (obj.event === 'edit') {
         var editFrom = layui.layer.open({
-          title : "编辑教师信息",
+          title : "编辑班级信息",
           type : 2,
-          content : "/teacher-edit",//弹出层页面
+          content : "/class-edit",//弹出层页面
           area: ['800px', '400px'],
           success : function(layero, index){
             var body = layui.layer.getChildFrame('body', index);
@@ -108,8 +106,6 @@
             var iframeWindow = layero.find('iframe')[0].contentWindow;
             body.find("#id").val(data.id);
             body.find("#name").val(data.name);
-            body.find("#title").val(data.title);
-            body.find("#email").val(data.email);
             iframeWindow.layui.form.render('select');
           }});
       }
@@ -121,18 +117,18 @@
 
         layer.open({
           type: 2,
-          title: '添加教师信息',
+          title: '添加班级信息',
           shadeClose: true,
           shade: false,
           /* maxmin: true,  *///开启最大化最小化按钮
           area: ['800px', '400px'],
-          content: '/teacher-add'
+          content: '/class-add'
         });
 
       },search:function(){
         var name=$("#searchConditon").val();
         table.reload('infoTable',{
-          url: '/teacher/searchByName'
+          url: '/class/searchByName'
           ,method: 'POST'
           , where: {"name":name},page: {
             curr: 1 //重新从第 1 页开始
@@ -142,7 +138,7 @@
       }
     };
 
-    $('#ManagerInfo .layui-btn').on('click', function() {
+    $('#classInfo .layui-btn').on('click', function() {
       var type = $(this).data('type');
       active[type] ? active[type].call(this) : '';
     });

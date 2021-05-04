@@ -45,4 +45,19 @@ public class AdminViewController {
     public String teacherList(){
         return "admin/teacher-list";
     }
+
+    @RequestMapping("/teacher-add")
+    public String teacherAdd(){
+        return "admin/teacher-add";
+    }
+
+    @RequestMapping("/teacher-edit")
+    public String teacherEdit(){
+        return "admin/teacher-edit";
+    }
+
+    @RequestMapping("/class-list")
+    public String classList(){
+        return "admin/class-list";
+    }
 }

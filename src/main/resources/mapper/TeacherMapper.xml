@@ -35,5 +35,66 @@
             teacher.delete_time is null
     </select>
 
+    <select id="findTeachersByName" resultMap="TeacherMap">
+        select
+            teacher.tc_id,
+            teacher.tc_name,
+            teacher.tc_title,
+            teacher.tc_email,
+            department.dp_id,
+            department.dp_name
+        from teacher,department
+        <where>
+            teacher.dp_id = department.dp_id
+            and teacher.delete_time is null
+            <if test="name != null and name != ''">
+                and teacher.tc_name like '%'||#{name}||'%'
+            </if>
+        </where>
+        limit #{limit} offset #{start}
+
+    </select>
+
+    <insert id="addTeacher" parameterType="java.util.Map">
+        insert into teacher (
+            tc_name,tc_title,tc_salt,tc_pwd,tc_email,dp_id,create_time
+        )
+        values(
+                  #{name},#{title},#{salt},#{pwd},#{email},#{dpID},current_timestamp
+              )
+    </insert>
+
+    <!--    更新信息-->
+    <update id="updateTeacher" parameterType="Teacher">
+        update teacher
+        <set>
+            update_time = current_timestamp
+            <if test="email != null and email != ''">,tc_email = #{email}</if>
+            <if test="title != null and title !=''">,tc_title = #{title}</if>
+        </set>
+        <where>
+            <choose>
+                <when test="id != null and id > 0">tc_id = #{id}</when>
+                <when test="name != null and name != ''">tc_name = #{name}</when>
+                <otherwise>tc_id = -1</otherwise>
+            </choose>
+        </where>
+    </update>
+
+
+    <update id="deleteTeacher" parameterType="Teacher">
+        update teacher
+        <set>
+            delete_time = current_timestamp
+        </set>
+        <where>
+            <choose>
+                <when test="id != null and id > 0">tc_id = #{id}</when>
+                <when test="name != null and name != ''">tc_name = #{name}</when>
+                <otherwise>tc_id = -1</otherwise>
+            </choose>
+        </where>
+    </update>
+
 
 </mapper>

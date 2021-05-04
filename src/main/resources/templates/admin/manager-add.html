@@ -14,7 +14,7 @@
 </head>
 
 <body>
-	<div class="page-content-wrap" id="scoreAdd">
+	<div class="page-content-wrap" id="managerAdd">
 
 		<form class="layui-form" action="" id="">
             <!-- 姓名 -->
@@ -45,7 +45,7 @@
 			
 			<div class="layui-form-item m-login-btn" style="text-align:center">
 				<div class="layui-inline">
-					<button class="layui-btn layui-btn-normal" lay-submit lay-filter="addScore">添加</button>
+					<button class="layui-btn layui-btn-normal" lay-submit lay-filter="addManager">添加</button>
 				</div>
 				<div class="layui-inline">
 					<button type="reset" class="layui-btn layui-btn-primary  site-demo-active"
@@ -97,7 +97,7 @@
 		  //创建一个编辑器
 		  var editIndex = layedit.build('LAY_demo_editor');
 			
-			  form.on('submit(addScore)', function(data){
+			  form.on('submit(addManager)', function(data){
 				    var str=JSON.stringify(data.field)
 				    var param = JSON.parse(str);
                     console.log(param);
@@ -136,7 +136,7 @@
 						parent.layer.msg('已取消操作');
 					}
 				};
-			  $('#scoreAdd .layui-btn').on('click', function() {
+			  $('#managerAdd .layui-btn').on('click', function() {
 					var type = $(this).data('type');
 					active[type] ? active[type].call(this) : '';
 				});
