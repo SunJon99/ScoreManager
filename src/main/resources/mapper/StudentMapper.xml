@@ -39,5 +39,68 @@
             delete_time is null
     </select>
 
+    <select id="findStudentsByName" resultMap="StudentMap">
+        select
+        student.st_id,
+        student.st_name,
+        student.st_email,
+        student.st_gender,
+        class.cl_name,
+        department.dp_name,
+        department.dp_id,
+        class.cl_id
+        from student,class,department
+        <where>
+            student.cl_id = class.cl_id
+            and class.dp_id = department.dp_id
+            and student.delete_time is null
+            <if test="name != null and name != ''">
+                and student.st_name like '%'||#{name}||'%'
+            </if>
+        </where>
+        limit #{limit} offset #{start}
+    </select>
+
+    <insert id="addStudent" parameterType="java.util.Map">
+        insert into student (
+            st_name,st_gender,st_salt,st_pwd,st_email,cl_id,create_time
+        )
+        values(
+            #{name},#{gender},#{salt},#{pwd},#{email},#{classID},current_timestamp
+        )
+    </insert>
+
+    <!--    更新信息-->
+    <update id="updateStudent" parameterType="Student">
+        update student
+        <set>
+            update_time = current_timestamp
+            <if test="name != null and name != ''">,st_name=#{name}</if>
+            <if test="email != null and email != ''">,st_email = #{email}</if>
+            <if test="gender != null and gender !=''">,st_gender = #{gender}</if>
+        </set>
+        <where>
+            <choose>
+                <when test="id != null and id > 0">st_id = #{id}</when>
+                <when test="name != null and name != ''">st_name = #{name}</when>
+                <otherwise>st_id = -1</otherwise>
+            </choose>
+        </where>
+    </update>
+
+
+    <update id="deleteStudent" parameterType="Student">
+        update student
+        <set>
+            delete_time = current_timestamp
+        </set>
+        <where>
+            <choose>
+                <when test="id != null and id > 0">st_id = #{id}</when>
+                <when test="name != null and name != ''">st_name = #{name}</when>
+                <otherwise>st_id = -1</otherwise>
+            </choose>
+        </where>
+    </update>
 
 </mapper>

@@ -59,7 +59,7 @@ public class TeacherController {
     }
 
     @RequestMapping("/deleteTeacher")
-    public Success deleteManager(Teacher teacher){
+    public Success deleteTeacher(Teacher teacher){
         try{
             teacherMapper.deleteTeacher(teacher);
         }catch (Exception e){

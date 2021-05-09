@@ -66,11 +66,18 @@
     <update id="updateLesson" parameterType="Lesson">
         update lesson
         <set>
-            update_time = current_timestap
+            update_time = current_timestamp
             <if test="name != null and name != ''">,ls_name=#{name}</if>
             <if test="credit != null and credit > 0">,ls_credit=#{credit}</if>
             <if test="time != null and time != ''">,ls_time=#{time}</if>
         </set>
+        <where>
+            <choose>
+                <when test="id != null and id > 0">ls_id = #{id}</when>
+                <when test="name != null and name != ''">ls_name = #{name}</when>
+                <otherwise>ls_id = -1</otherwise>
+            </choose>
+        </where>
     </update>
 
     <update id="deleteLesson" parameterType="Lesson">

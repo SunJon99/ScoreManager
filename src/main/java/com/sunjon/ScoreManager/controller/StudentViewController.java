@@ -52,25 +52,6 @@ public class StudentViewController {
         return "score-list";
     }
 
-    @RequestMapping("/student-list")
-    public String studenList(){
-        return "student-list";
-    }
-
-    @RequestMapping("/student-add")
-    public String studentAdd(){
-        return "student-add";
-    }
-
-    @RequestMapping("/student-detail")
-    public String studentDetail(){
-        return "student-detail";
-    }
-
-    @RequestMapping("/student-edit")
-    public String studentEdit(){
-        return "student-edit";
-    }
 
 
 }

@@ -109,18 +109,58 @@
             var iframeWindow = layero.find('iframe')[0].contentWindow;
             body.find("#id").val(data.id);
             body.find("#name").val(data.name);
-            body.find("#email").val(data.email);
+            body.find("#credit").val(data.credit);
+            body.find("#time").val(data.time);
             iframeWindow.layui.form.render('select');
           }});
       }
       if(obj.event == 'goal'){
-
+        var editFrom = layui.layer.open({
+          title : "编辑课程目标信息",
+          type : 2,
+          content : "/goal-list",//弹出层页面
+          area: ['800px', '400px'],
+          maxmin:true, //开启最大化
+          success : function(layero, index){
+            var body = layui.layer.getChildFrame('body', index);
+            //获取窗口对象
+            var iframeWindow = layero.find('iframe')[0].contentWindow;
+            body.find("#id").val(data.id);
+            body.find("#name").val(data.name);
+            iframeWindow.layui.form.render('select');
+          }});
       }
       if(obj.event == 'tType'){
-
+        var editFrom = layui.layer.open({
+          title : "编辑课程考核类信息",
+          type : 2,
+          content : "/tType-list",//弹出层页面
+          area: ['800px', '400px'],
+          maxmin:true, //开启最大化
+          success : function(layero, index){
+            var body = layui.layer.getChildFrame('body', index);
+            //获取窗口对象
+            var iframeWindow = layero.find('iframe')[0].contentWindow;
+            body.find("#id").val(data.id);
+            body.find("#name").val(data.name);
+            iframeWindow.layui.form.render('select');
+          }});
       }
       if(obj.event == 'test'){
-
+        var editFrom = layui.layer.open({
+          title : "编辑课程考核项目信息",
+          type : 2,
+          content : "/test-list",//弹出层页面
+          area: ['800px', '400px'],
+          maxmin:true, //开启最大化
+          success : function(layero, index){
+            var body = layui.layer.getChildFrame('body', index);
+            //获取窗口对象
+            var iframeWindow = layero.find('iframe')[0].contentWindow;
+            body.find("#id").val(data.id);
+            body.find("#name").val(data.name);
+            iframeWindow.layui.form.render('select');
+          }});
       }
     });
 

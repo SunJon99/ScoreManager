@@ -11,6 +11,18 @@
         <result property="department" column="dp_name"/>
     </resultMap>
 
+    <select id="findAllClasses" resultMap="ClassMap">
+        select
+            class.cl_id,
+            class.cl_name,
+            department.dp_id,
+            department.dp_name
+
+        from class,department
+        where class.dp_id = department.dp_id
+          and class.delete_time is null
+    </select>
+
     <select id="findAllClassesByPage" resultMap="ClassMap">
         select
             class.cl_id,

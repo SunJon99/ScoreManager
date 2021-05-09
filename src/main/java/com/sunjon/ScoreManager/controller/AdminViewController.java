@@ -56,6 +56,24 @@ public class AdminViewController {
         return "admin/teacher-edit";
     }
 
+
+
+    @RequestMapping("/student-list")
+    public String studenList(){
+        return "admin/student-list";
+    }
+
+    @RequestMapping("/student-add")
+    public String studentAdd(){
+        return "admin/student-add";
+    }
+
+    @RequestMapping("/student-edit")
+    public String studentEdit(){
+        return "admin/student-edit";
+    }
+
+
     @RequestMapping("/class-list")
     public String classList(){
         return "admin/class-list";
@@ -80,4 +98,25 @@ public class AdminViewController {
     public String lessonAdd(){
         return "admin/lesson-add";
     }
+
+    @RequestMapping("/lesson-edit")
+    public String lessonEdit(){
+        return "admin/lesson-edit";
+    }
+
+    @RequestMapping("/goal-list")
+    public String goalList(){
+        return "admin/goal-list";
+    }
+
+    @RequestMapping("/goal-add")
+    public String goalAdd(){
+        return "admin/goal-add";
+    }
+
+    @RequestMapping("/goal-edit")
+    public String goalEdit(){
+        return "admin/goal-edit";
+    }
+
 }

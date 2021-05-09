@@ -38,7 +38,7 @@
                 <th lay-data="{type:'checkbox', }"></th>
                 <th lay-data="{field:'id',sort: true}">学生编号</th>
                 <th lay-data="{field:'name'}">姓名</th>
-                <th lay-data="{field:'title'}">性别</th>
+                <th lay-data="{field:'gender'}">性别</th>
                 <th lay-data="{field:'email'}">邮箱</th>
                 <th lay-data="{field:'className'}">所属班级</th>
                 <th lay-data="{field:'department'}">所属学院</th>
@@ -99,9 +99,9 @@
             }
             if (obj.event === 'edit') {
                 var editFrom = layui.layer.open({
-                    title : "编辑教师信息",
+                    title : "编辑学生信息",
                     type : 2,
-                    content : "/teacher-edit",//弹出层页面
+                    content : "/student-edit",//弹出层页面
                     area: ['800px', '400px'],
                     success : function(layero, index){
                         var body = layui.layer.getChildFrame('body', index);
@@ -109,7 +109,7 @@
                         var iframeWindow = layero.find('iframe')[0].contentWindow;
                         body.find("#id").val(data.id);
                         body.find("#name").val(data.name);
-                        body.find("#title").val(data.title);
+                        body.find("#gender").val(data.gender);
                         body.find("#email").val(data.email);
                         iframeWindow.layui.form.render('select');
                     }});
@@ -122,7 +122,7 @@
 
                 layer.open({
                     type: 2,
-                    title: '添加教师信息',
+                    title: '添加学生信息',
                     shadeClose: true,
                     shade: false,
                     /* maxmin: true,  *///开启最大化最小化按钮

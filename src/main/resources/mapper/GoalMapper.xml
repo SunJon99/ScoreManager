@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunjon.ScoreManager.mapper.GoalMapper">
+
+    <resultMap id="GoalMap" type="Goal">
+        <id property="id" column="lg_id"/>
+        <result property="name" column="lg_name"/>
+        <result property="description" column="lg_description"/>
+        <result property="proportion" column="lg_proportion"/>
+        <result property="lessonId" column="ls_id"/>
+        <result property="lessonName" column="ls_name"/>
+    </resultMap>
+
+    <select id="findGoal4Lesson" parameterType="Integer" resultMap="GoalMap">
+        select
+            ls_goal.lg_id,
+            ls_goal.lg_name,
+            ls_goal.lg_description,
+            ls_goal.lg_proportion,
+            ls_goal.ls_id,
+            lesson.ls_name
+        from ls_goal,lesson
+        <where>
+            ls_goal.ls_id = lesson.ls_id
+            and ls_goal.ls_id = #{lessonId}
+        </where>
+    </select>
+
+    <insert id="addGoal4Lesson" parameterType="java.util.Map">
+        insert into ls_goal(
+           lg_name,lg_description,lg_proportion,ls_id
+        )values(
+            #{name},#{description},#{proportion},#{lessonId}
+        )
+    </insert>
+
+    <update id="updateGoal" parameterType="Goal">
+        update ls_goal
+        <set>
+            update_time = current_timestamp
+            <if test="name != null and name != ''">,lg_name=#{name}</if>
+            <if test="description != null and description != ''">,lg_description = #{description}</if>
+            <if test="proportion != null and proportion !=''">,lg_proportion = #{proportion}</if>
+        </set>
+        <where>
+            <choose>
+                <when test="id != null and id > 0">lg_id = #{id}</when>
+                <otherwise>st_id = -1</otherwise>
+            </choose>
+        </where>
+    </update>
+
+    <delete id="deleteGoal" parameterType="Goal">
+        delete
+        from ls_goal
+        <where>
+            <choose>
+                <when test="id != null and id > 0">lg_id = #{id}</when>
+                <when test="name != null and name != ''">lg_name = #{name}</when>
+                <otherwise>lg_id = -1</otherwise>
+            </choose>
+        </where>
+    </delete>
+
+    <delete id="deleteGoal" parameterType="Integer">
+        delete
+        from ls_goal
+        <where>
+            <choose>
+                <when test="lessonId != null and lessonId > 0">ls_id = #{lessonId}</when>
+                <otherwise>lg_id = -1</otherwise>
+            </choose>
+        </where>
+    </delete>
+
+</mapper>

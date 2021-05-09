@@ -10,6 +10,7 @@ import java.util.Map;
 @Repository
 @Mapper
 public interface ClassMapper {
+    List<ClassInfo> findAllClasses();
     List<ClassInfo> findAllClassesByPage(Integer start,Integer limit);
     Integer countClasses();
     List<ClassInfo> findClassesByName(String name,Integer start,Integer limit);

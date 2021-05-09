@@ -23,6 +23,16 @@ public class ClassController {
         this.classMapper = classMapper;
     }
 
+    @RequestMapping("/getAllClass")
+    public ClassList getAllClass(){
+        List<ClassInfo> list = classMapper.findAllClasses();
+        ClassList data = new ClassList();
+        data.setData(list);
+        data.setCode(0);
+        data.setCount(list.size());
+        return data;
+    }
+
     @RequestMapping("/getAllClasses")
     public ClassList getAllClasses(@RequestParam(name = "page",required = false,defaultValue = "1")Integer curr,
                                    @RequestParam(name = "limit",required = false,defaultValue = "10")Integer limit){
