@@ -4,39 +4,39 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sunjon.ScoreManager.mapper.ManagerMapper">
     <resultMap id="ManagerMap" type="Manager">
-        <id property="id" column="dm_id"/>
-        <result property="name" column="dm_name"/>
-        <result property="email" column="dm_email"/>
+        <id property="id" column="m_id"/>
+        <result property="name" column="m_name"/>
+        <result property="email" column="m_email"/>
         <result property="organization" column="dp_name"/>
     </resultMap>
 
     <select id="findAllManagers" resultMap="ManagerMap">
-        select dm_id,dm_name,dm_email,dp_name
-        from dp_manager,department
-        where dp_manager.dp_id = department.dp_id and dp_manager.delete_time is null;
+        select m_id,m_name,m_email,dp_name
+        from manager,department
+        where manager.dp_id = department.dp_id and manager.delete_time is null;
     </select>
 
     <select id="findManagersByPage" resultMap="ManagerMap">
-        select dm_id,dm_name,dm_email,dp_name
-        from dp_manager,department
-        where dp_manager.dp_id = department.dp_id and dp_manager.delete_time is null
+        select m_id,m_name,m_email,dp_name
+        from manager,department
+        where manager.dp_id = department.dp_id and manager.delete_time is null
         LIMIT #{limit} offset #{start}
     </select>
 
     <select id="countManagers" resultType="Integer">
-        select count(dm_id)
-        from dp_manager
+        select count(m_id)
+        from manager
         where delete_time is null
     </select>
 
     <select id="findManagersByName" resultMap="ManagerMap">
-        select dm_id,dm_name,dm_email,dp_name
-        from dp_manager,department
+        select m_id,m_name,m_email,dp_name
+        from manager,department
         <where>
-            dp_manager.dp_id = department.dp_id
-            and dp_manager.delete_time is null
+            manager.dp_id = department.dp_id
+            and manager.delete_time is null
             <if test="name != null and name != ''">
-                and dp_manager.dm_name like '%'||#{name}||'%'
+                and manager.m_name like '%'||#{name}||'%'
             </if>
         </where>
         limit #{limit} offset #{start}
@@ -44,8 +44,8 @@
     </select>
 
     <insert id="addManager" parameterType="java.util.Map">
-        insert into dp_manager (
-            dm_name,dm_salt,dm_pwd,dm_email,dp_id,create_time
+        insert into manager (
+            m_name,m_salt,m_pwd,m_email,dp_id,create_time
         )
         values(
             #{name},#{salt},#{pwd},#{email},#{dpID},current_timestamp
@@ -54,30 +54,30 @@
 
 <!--    更新学院管理员信息-->
     <update id="updateManager" parameterType="Manager">
-        update dp_manager
+        update manager
         <set>
             update_time = current_timestamp
-            <if test="email != null and email != ''">,dm_email = #{email}</if>
+            <if test="email != null and email != ''">,m_email = #{email}</if>
         </set>
         <where>
              <choose>
-                 <when test="id != null and id > 0">dm_id = #{id}</when>
-                 <when test="name != null and name != ''">dm_name = #{name}</when>
-                 <otherwise>dm_id = -1</otherwise>
+                 <when test="id != null and id > 0">m_id = #{id}</when>
+                 <when test="name != null and name != ''">m_name = #{name}</when>
+                 <otherwise>m_id = -1</otherwise>
              </choose>
         </where>
     </update>
 
     <update id="deleteManager" parameterType="Manager">
-        update dp_manager
+        update manager
         <set>
             delete_time = current_timestamp
         </set>
         <where>
             <choose>
-                <when test="id != null and id > 0">dm_id = #{id}</when>
-                <when test="name != null and name != ''">dm_name = #{name}</when>
-                <otherwise>dm_id = -1</otherwise>
+                <when test="id != null and id > 0">m_id = #{id}</when>
+                <when test="name != null and name != ''">m_name = #{name}</when>
+                <otherwise>m_id = -1</otherwise>
             </choose>
         </where>
     </update>

@@ -9,4 +9,7 @@ spring:
 mybatis:
   mapper-locations: mapper/*.xml
   type-aliases-package: com.sunjon.ScoreManager.bean
-
+server:
+  servlet:
+    session:
+      timeout: 60m

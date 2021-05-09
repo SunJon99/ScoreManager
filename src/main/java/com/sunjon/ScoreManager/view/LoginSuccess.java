@@ -1,12 +1,12 @@
 package com.sunjon.ScoreManager.view;
 
-public class VResult {
+public class LoginSuccess {
     private Integer code;
     private String location;
 
-    public VResult(){}
+    public LoginSuccess(){}
 
-    public VResult(Integer code, String location) {
+    public LoginSuccess(Integer code, String location) {
         this.code = code;
         this.location = location;
     }

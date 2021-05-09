@@ -31,7 +31,13 @@
         limit #{limit} offset #{start}
     </select>
 
-
+    <select id="countStudents" resultType="Integer">
+        select
+            count(st_id)
+        from student
+        where
+            delete_time is null
+    </select>
 
 
 </mapper>

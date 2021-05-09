@@ -8,42 +8,85 @@
         <result property="name" column="ls_name"/>
         <result property="credit" column="ls_credit"/>
         <result property="time" column="ls_time"/>
+        <result property="dpID" column="dp_id"/>
+        <result property="department" column="dp_name"/>
     </resultMap>
 
-    <insert id="addLesson" parameterType="Lesson">
-        insert into lesson(ls_name, ls_credit, ls_time, update_time)
-        values(#{name}, #{credit}, #{time}, current_timestamp)
+    <select id="findAllLessonsByPage" resultMap="LessonMap">
+        select
+            lesson.ls_id,
+            lesson.ls_name,
+            lesson.ls_credit,
+            lesson.ls_time,
+            department.dp_id,
+            department.dp_name
+        from lesson,department
+        where lesson.dp_id = department.dp_id
+          and lesson.delete_time is null
+            limit #{limit} offset #{start}
+    </select>
+
+    <select id="countLessons" resultType="Integer">
+        select
+            count(ls_id)
+        from lesson
+        where
+            delete_time is null
+    </select>
+
+    <select id="findLessonsByName" resultMap="LessonMap">
+        select
+        lesson.ls_id,
+        lesson.ls_name,
+        lesson.ls_credit,
+        lesson.ls_time,
+        department.dp_id,
+        department.dp_name
+        from lesson,department
+        <where>
+            lesson.dp_id = department.dp_id
+            and lesson.delete_time is null
+            <if test="name != null and name != ''">
+                and lesson.ls_name like '%'||#{name}||'%'
+            </if>
+        </where>
+        limit #{limit} offset #{start}
+    </select>
+
+    <insert id="addLesson" parameterType="java.util.Map">
+        insert into lesson (
+            ls_name,ls_credit,ls_time,dp_id,create_time
+        )
+        values(
+                  #{name},#{credit},#{time},#{dpID},current_timestamp
+              )
     </insert>
+
 
     <update id="updateLesson" parameterType="Lesson">
         update lesson
         <set>
-            <if test="name != null and name != ''">ls_name=#{name},</if>
-            <if test="credit != null and credit > 0">ls_credit=#{credit},</if>
-            <if test="time != null and time != ''">ls_time=#{time},</if>
             update_time = current_timestap
+            <if test="name != null and name != ''">,ls_name=#{name}</if>
+            <if test="credit != null and credit > 0">,ls_credit=#{credit}</if>
+            <if test="time != null and time != ''">,ls_time=#{time}</if>
         </set>
     </update>
 
-    <delete id="deleteLesson" parameterType="Lesson">
-        delete from lesson where
-        <choose>
-            <when test="id != null and id > 0">ls_id = #{id}</when>
-            <when test="name != null and name != ''">ls_name = #{name}</when>
-            <when test="time != null and time != ''">ls_time = #{time}</when>
-            <otherwise>ls_id = -1</otherwise>
-        </choose>
-    </delete>
-
-    <select id="findLesson" parameterType="Lesson" resultMap="LessonMap">
-        select ls_id, ls_name, ls_credit, ls_time from lesson
+    <update id="deleteLesson" parameterType="Lesson">
+        update lesson
+        <set>
+            delete_time = current_timestamp
+        </set>
         <where>
-            ls_id > 0
-            <if test="id != null and id > 0">and ls_id = #{id}</if>
-            <if test="name != null and name != ''">and ls_name = #{name}</if>
-            <if test="time != null and time != ''">and ls_time = #{time}</if>
-            <if test="credit != null and credit > 0">and ls_credit = #{credit}</if>
+            <choose>
+                <when test="id != null and id > 0">ls_id = #{id}</when>
+                <when test="name != null and name != ''">ls_name = #{name}</when>
+                <when test="time != null and time != ''">ls_time = #{time}</when>
+                <otherwise>ls_id = -1</otherwise>
+            </choose>
         </where>
-    </select>
+    </update>
+
 
 </mapper>

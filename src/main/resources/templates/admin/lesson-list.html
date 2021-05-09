@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>网站后台管理模版</title>
+  <link rel="stylesheet" type="text/css"
+        href="admin/layui/css/layui.css" />
+  <link rel="stylesheet" type="text/css" href="admin/css/admin.css" />
+</head>
+
+<body>
+<div class="page-content-wrap" id="LessonInfo">
+  <h5 style="text-align:center;font-size: 20px;line-height: 25px;color:#666">课程信息管理界面</h5>
+  <hr>
+  <div class="layui-form-item">
+    <div class="layui-inline tool-btn">
+      <button class="layui-btn layui-btn-small site-demo-active"
+              data-type="tabAdd">
+        <i class="layui-icon">&#xe654;</i>
+      </button>
+    </div>
+    <div class="layui-inline">
+      <input type="text" id="searchConditon" placeholder="请输入课程名称"
+             autocomplete="off" class="layui-input">
+    </div>
+    <button class="layui-btn layui-btn-normal site-demo-active"
+            data-type="search" id="searchLesson">搜索</button>
+    <table class="layui-table"
+           lay-data="{ url:'/lesson/getAllLessons', page:true, id:'infoTable'}"
+           lay-filter="demo">
+      <thead>
+      <tr>
+        <th lay-data="{field:'id',sort: true,width:150}">课程编号</th>
+        <th lay-data="{field:'name',width:200}">课程名</th>
+        <th lay-data="{field:'credit',width:70}">学分</th>
+        <th lay-data="{field:'time',width:100}">学年</th>
+        <th lay-data="{field:'department',width:200}">所属学院</th>
+        <th lay-data="{fixed: 'right', width:330, align:'left', toolbar: '#barDemo'}"></th>
+      </tr>
+      </thead>
+    </table>
+  </div>
+
+
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="goal">目标</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="tType">考核</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="test">项目</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  </script>
+
+</div>
+<script src="admin/layui/layui.all.js" type="text/javascript"
+        charset="utf-8"></script>
+<script>
+  layui.use('table', function() {
+    var $ = layui.jquery
+    var table = layui.table;
+    //监听表格复选框选择
+    table.on('checkbox(demo)', function(obj) {
+      console.log(obj)
+    });
+    //监听工具条
+    table.on('tool(demo)', function(obj) {
+      var data = obj.data;
+      if (obj.event === 'del') {
+        layer.confirm('真的删除这个课程信息吗？', function(index) {
+          var data = obj.data;
+          $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/lesson/deleteLesson",//url
+            data: data,
+            success: function (result) {
+              if (result.code == "0") {
+                layer.close(index);
+                layer.msg('删除课程成功');
+                layui.table.reload('infoTable',{page:{curr:1}});
+              }else{
+                layer.msg('删除课程失败', {
+                  icon: 5
+                });
+              }
+            },
+            error : function() {
+              layer.msg('服务器错误', {
+                icon: 5
+              });
+            }
+          });
+        });
+      }
+      if (obj.event === 'edit') {
+        var editFrom = layui.layer.open({
+          title : "编辑课程信息",
+          type : 2,
+          content : "/lesson-edit",//弹出层页面
+          area: ['800px', '400px'],
+          success : function(layero, index){
+            var body = layui.layer.getChildFrame('body', index);
+            //获取窗口对象
+            var iframeWindow = layero.find('iframe')[0].contentWindow;
+            body.find("#id").val(data.id);
+            body.find("#name").val(data.name);
+            body.find("#email").val(data.email);
+            iframeWindow.layui.form.render('select');
+          }});
+      }
+      if(obj.event == 'goal'){
+
+      }
+      if(obj.event == 'tType'){
+
+      }
+      if(obj.event == 'test'){
+
+      }
+    });
+
+    //触发事件
+    var active = {
+      tabAdd : function() {
+
+        layer.open({
+          type: 2,
+          title: '添加课程信息',
+          shadeClose: true,
+          shade: false,
+          /* maxmin: true,  *///开启最大化最小化按钮
+          area: ['800px', '400px'],
+          content: '/lesson-add'
+        });
+
+      },search:function(){
+        var name=$("#searchConditon").val();
+        table.reload('infoTable',{
+          url: '/lesson/searchByName'
+          ,method: 'POST'
+          , where: {"name":name},page: {
+            curr: 1 //重新从第 1 页开始
+          }
+
+        })
+      }
+    };
+
+    $('#LessonInfo .layui-btn').on('click', function() {
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+
+  });
+</script>
+</body>
+
+</html>

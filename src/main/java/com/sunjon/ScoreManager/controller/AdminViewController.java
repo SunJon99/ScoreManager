@@ -60,4 +60,24 @@ public class AdminViewController {
     public String classList(){
         return "admin/class-list";
     }
+
+    @RequestMapping("/class-add")
+    public String classAdd(){
+        return "admin/class-add";
+    }
+
+    @RequestMapping("/class-edit")
+    public String classEdit(){
+        return "admin/class-edit";
+    }
+
+    @RequestMapping("/lesson-list")
+    public String lessonList(){
+        return "admin/lesson-list";
+    }
+
+    @RequestMapping("/lesson-add")
+    public String lessonAdd(){
+        return "admin/lesson-add";
+    }
 }

@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface LessonService {
     /**
-     * 添加课程信息
+     * 添加
      */
     Boolean AddLesson(Lesson lesson);
     Boolean AddLessons(List<Lesson> lessons);
@@ -29,7 +29,7 @@ public interface LessonService {
 
     /**
      * 查询课程信息
-     */
+     * */
     List<Lesson> ShowAllLessons();
     Lesson ShowLessonByID(Integer id);
     List<Lesson> ShowLessonsByName(String name);

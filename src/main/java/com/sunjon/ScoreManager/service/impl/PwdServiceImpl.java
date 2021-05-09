@@ -23,7 +23,7 @@ public class PwdServiceImpl implements PwdService {
      */
     @Override
     public Boolean isAccurate(String pwdHash,String saltPassWord) {
-        //判断输入的密码+盐与数据库中 密码hash值作比较，验证密码
+        //判断盐+输入的密码与数据库中 密码hash值作比较，验证密码
         return pwdHash.equals(pwdHandler.GetHash(saltPassWord));
     }
 

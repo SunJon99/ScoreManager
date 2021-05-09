@@ -4,14 +4,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class SystemViewController {
+public class SystemController {
     /**
      * 响应系统首页
      * @return
      */
-    @RequestMapping("/index")
+    @RequestMapping("/")
     public String index(){
-        return "index";
+        return "redirect:/login";
     }
 
     /**

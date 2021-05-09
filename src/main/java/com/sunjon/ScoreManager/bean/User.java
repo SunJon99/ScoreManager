@@ -48,13 +48,4 @@ public class User {
         this.passWord = passWord;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", passWord=" + passWord +
-                '}';
-    }
 }

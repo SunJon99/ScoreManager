@@ -51,7 +51,7 @@ public class ClassController {
     }
 
     @RequestMapping("/deleteClass")
-    public Success deleteManager(ClassInfo classInfo){
+    public Success deleteClass(ClassInfo classInfo){
         try{
             classMapper.deleteClass(classInfo);
         }catch (Exception e){
@@ -78,7 +78,7 @@ public class ClassController {
     }
 
     @RequestMapping("/editClass")
-    public Success editTeacher(ClassInfo classInfo){
+    public Success editClass(ClassInfo classInfo){
         try{
             classMapper.updateClass(classInfo);
         }catch (Exception e){

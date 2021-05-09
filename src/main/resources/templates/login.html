@@ -18,7 +18,7 @@
 				<div class="m-login-warp">
 					<form class="layui-form">
 						<div class="layui-form-item">
-							<input type="text" name="userName" required lay-verify="required" placeholder="用户名" autocomplete="off" class="layui-input">
+							<input type="text" name="userEmail" required lay-verify="required|email" placeholder="注册邮箱" autocomplete="off" class="layui-input">
 						</div>
 						<div class="layui-form-item">
 							<input type="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">
@@ -67,11 +67,11 @@
 				                //几个参数需要注意一下
 				                    type: "POST",//方法类型
 				                    dataType: "json",//预期服务器返回的数据类型
-				                    url: "/user/login",//url
+				                    url: "/login/check",//url
 				                    data: param,
 				                    success: function (result) {
-				                    	if (result.code == "1") {
-						                       location.href="/index.html";
+				                    	if (result.code == "0") {
+						                       location.href="/admin-index";
 						                    } else {
 						                        layer.msg('用户名密码错误', {
 						                            icon: 5
@@ -90,12 +90,12 @@
 								//几个参数需要注意一下
 								type: "POST",//方法类型
 								dataType: "json",//预期服务器返回的数据类型
-								url: "/user/login",//url
+								url: "/login/check",//url
 								data: param,
 								success: function (result) {
 									console.log(result);
-									if (result.code == "1") {
-										location.href="/index.html";
+									if (result.code == "0") {
+										location.href="/taecher-index";
 									} else {
 										layer.msg('用户名密码错误', {
 											icon: 5
@@ -110,40 +110,27 @@
 							});
 			     		}else{
 							console.log("学生登录");
-							var userName=param.userName;
-							var reg=/^[\d]{6,10}$/;
-							if(userName.length>10){
-								layer.msg('学号长度不能大于10位', {
-									icon: 5
-								});
-							}
-							if(reg.test(userName)){
-								$.ajax({
-									//几个参数需要注意一下
-									type: "POST",//方法类型
-									dataType: "json",//预期服务器返回的数据类型
-									url: "/user/studentLogin",//url
-									data: param,
-									success: function (result) {
-										if (result.code == "1") {
-											location.href="/student-index.html";
-										} else {
-											layer.msg('用户名密码错误', {
-												icon: 5
-											});
-										}
-									},
-									error : function() {
-										layer.msg('服务器错误', {
+							$.ajax({
+								//几个参数需要注意一下
+								type: "POST",//方法类型
+								dataType: "json",//预期服务器返回的数据类型
+								url: "/login/check",
+								data: param,
+								success: function (result) {
+									if (result.code == "0") {
+										location.href="/student-index";
+									} else {
+										layer.msg('用户名密码错误', {
 											icon: 5
 										});
 									}
-								});
-							}else{
-								layer.msg('学生角色登录请使用学号', {
-									icon: 5
-								});
-							}
+								},
+								error : function() {
+									layer.msg('服务器错误', {
+										icon: 5
+									});
+								}
+							});
 						}
 					return false;
 				});
