@@ -7,15 +7,21 @@ public class Test {
     private Integer id; //考核项目ID
     private String name; //考核项目名称
     private Float totalScore; //考核项目总分
-    private Integer ttID; //考核类别ID
+    private Integer ttId; //考核类别ID
+    private String ttName;// the name of TestType
+    private Integer goalId;// the id of goal
+    private String goalName;//the name of goal
 
     public Test(){}
 
-    public Test(Integer id, String name, Float totalScore, Integer ttID) {
+    public Test(Integer id, String name, Float totalScore, Integer ttId, String ttName, Integer goalId, String goalName) {
         this.id = id;
         this.name = name;
         this.totalScore = totalScore;
-        this.ttID = ttID;
+        this.ttId = ttId;
+        this.ttName = ttName;
+        this.goalId = goalId;
+        this.goalName = goalName;
     }
 
     public Integer getId() {
@@ -42,22 +48,35 @@ public class Test {
         this.totalScore = totalScore;
     }
 
-    public Integer getTtID() {
-        return ttID;
+    public Integer getTtId() {
+        return ttId;
     }
 
-    public void setTtID(Integer ttID) {
-        this.ttID = ttID;
+    public void setTtId(Integer ttId) {
+        this.ttId = ttId;
     }
 
-    @Override
-    public String toString() {
-        return "Test{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", totalScore=" + totalScore +
-                ", ttID=" + ttID +
-                '}';
+    public String getTtName() {
+        return ttName;
     }
 
+    public void setTtName(String ttName) {
+        this.ttName = ttName;
+    }
+
+    public Integer getGoalId() {
+        return goalId;
+    }
+
+    public void setGoalId(Integer goalId) {
+        this.goalId = goalId;
+    }
+
+    public String getGoalName() {
+        return goalName;
+    }
+
+    public void setGoalName(String goalName) {
+        this.goalName = goalName;
+    }
 }

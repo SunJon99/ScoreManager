@@ -1,10 +1,181 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html>
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>网站后台管理模版</title>
+  <link rel="stylesheet" type="text/css"
+        href="admin/layui/css/layui.css" />
+  <link rel="stylesheet" type="text/css" href="admin/css/admin.css" />
+</head>
+
+<body>
+<div class="page-content-wrap" id="LessonInfo">
+  <h5 style="text-align:center;font-size: 20px;line-height: 25px;color:#666">课程目标考核类管理界面</h5>
+  <hr>
+  <!-- 操作区域 -->
+  <div>
+    <div class="layui-form-item">
+        <div class="layui-inline tool-btn">
+          <button class="layui-btn layui-btn-small site-demo-active"
+                  data-type="tabAdd">
+            <i class="layui-icon">&#xe654;</i>
+          </button>
+        </div>
+       
+        <div class="layui-inline tool-btn">
+            <button class="layui-btn layui-btn-small site-demo-active"
+                    data-type="showTable">加载数据
+              <i class="layui-icon">&#xe683;</i>
+            </button>
+          </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">编号</label>
+            <div class="layui-input-block">
+              <input type="text" name="id" readonly="readonly"  id="id" lay-verify=""
+                     autocomplete="off" placeholder="编号" class="layui-input">
+            </div>
+        </div>
+        
+        <div class="layui-inline">
+            <label class="layui-form-label">课程名称</label>
+            <div class="layui-input-block">
+              <input type="text" name="name" id="name" readonly="readonly" lay-verify=""
+                     placeholder="课程名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+  </div>
+
+        
+            <!-- 数据显示表格 -->
+    <table id="infoTable" class="layui-table" lay-filter="demo"></table>
+
+
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  </script>
+
+</div>
+<script src="admin/layui/layui.all.js" type="text/javascript"
+        charset="utf-8"></script>
+<script>
+  layui.use('table', function() {
+    var $ = layui.jquery;
+    var table = layui.table;
+    
+
+    //监听表格复选框选择
+    table.on('checkbox(demo)', function(obj) {
+      console.log(obj)
+    });
+    //监听工具条
+    table.on('tool(demo)', function(obj) {
+      var data = obj.data;
+      if (obj.event === 'del') {
+        layer.confirm('真的删除这个目标考核类信息吗？', function(index) {
+          var data = obj.data;
+          $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/tType/deleteType",//url
+            data: data,
+            success: function (result) {
+              if (result.code == "0") {
+                layer.close(index);
+                layer.msg('删除目标考核类成功');
+                layui.table.reload('infoTable',{page:{curr:1}});
+              }else{
+                layer.msg('删除目标考核类失败', {
+                  icon: 5
+                });
+              }
+            },
+            error : function() {
+              layer.msg('服务器错误', {
+                icon: 5
+              });
+            }
+          });
+        });
+      }
+      if (obj.event === 'edit') {
+        var editFrom = layui.layer.open({
+          title : "编辑课程目标信息",
+          type : 2,
+          content : "/type-edit",//弹出层页面
+          area: ['800px', '400px'],
+          success : function(layero, index){
+            var body = layui.layer.getChildFrame('body', index);
+            //获取窗口对象
+            var iframeWindow = layero.find('iframe')[0].contentWindow;
+            body.find("#id").val(data.id);
+            body.find("#name").val(data.name);
+            body.find("#proportion").val(data.proportion);
+           
+            iframeWindow.layui.form.render('select');
+          }});
+      }
+    });
+
+    //触发事件
+    var active = {
+      tabAdd : function() {
+        var $ = layui.jquery;
+        layer.open({
+          type: 2,
+          title: '添加考核类信息',
+          shadeClose: true,
+          shade: false,
+          maxmin:true,
+          /* maxmin: true,  *///开启最大化最小化按钮
+          area: ['800px', '400px'],
+          content: '/type-add',
+          success : function(layero, index){
+            var body = layui.layer.getChildFrame('body', index);
+            //获取窗口对象
+            var iframeWindow = layero.find('iframe')[0].contentWindow;
+            iframeWindow.layui.form.render('select');
+          }
+        });
+
+      },
+      showTable : function(){
+        var lessonId = $("#id").val();
+        //表格渲染
+        table.render({
+            elem:'#infoTable'
+            ,url:'tType/getAllTypes'
+            ,page:false
+            ,where:{"lessonId":lessonId}
+            ,cols:[
+                [
+                {field:'id',sort:true,width:150,title:'编号'}
+                ,{field:'name',width:200,title:'名称'}
+                ,{field:'proportion',width:200,title:'权重'}
+                ,{field:'goalName',width:200,title:'所属目标'}
+                ,{fixed:'right',width:200,align:'left',toolbar:'#barDemo'}
+                ]
+            ]
+         });
+      }
+
+
+    };
+
+    $('#LessonInfo .layui-btn').on('click', function() {
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+
+  });
+</script>
 </body>
+
 </html>

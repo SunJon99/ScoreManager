@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunjon.ScoreManager.mapper.TestTypeMapper">
+
+    <resultMap id="tTypeMap" type="TestType">
+        <id property="id" column="tt_id"/>
+        <result property="name" column="tt_name"/>
+        <result property="proportion" column="tt_proportion"/>
+        <result property="goalId" column="lg_id"/>
+        <result property="goalName" column="lg_name"/>
+    </resultMap>
+
+    <select id="findTestType4Lesson" parameterType="Integer" resultMap="tTypeMap">
+        select
+        test_type.tt_id,
+        test_type.tt_name,
+        test_type.tt_proportion,
+        test_type.lg_id,
+        ls_goal.lg_name
+        from test_type,ls_goal
+        <where>
+            test_type.lg_id = ls_goal.lg_id
+            and ls_goal.ls_id = #{lessonId}
+        </where>
+    </select>
+
+    <insert id="addTestType4Lesson" parameterType="java.util.Map">
+        insert into test_type(
+            tt_name,tt_proportion,lg_id
+        )values(
+                   #{name},#{proportion},#{goalId}
+               )
+    </insert>
+
+    <update id="updateTestType" parameterType="TestType">
+        update test_type
+        <set>
+            update_time = current_timestamp
+            <if test="name != null and name != ''">,tt_name=#{name}</if>
+            <if test="proportion != null and proportion !=''">,tt_proportion = #{proportion}</if>
+        </set>
+        <where>
+            <choose>
+                <when test="id != null and id > 0">tt_id = #{id}</when>
+                <otherwise>tt_id = -1</otherwise>
+            </choose>
+        </where>
+    </update>
+
+    <delete id="deleteTestType" parameterType="TestType">
+        delete
+        from test_type
+        <where>
+            <choose>
+                <when test="id != null and id > 0">tt_id = #{id}</when>
+                <when test="name != null and name != ''">tt_name = #{name}</when>
+                <otherwise>lg_id = -1</otherwise>
+            </choose>
+        </where>
+    </delete>
+
+</mapper>

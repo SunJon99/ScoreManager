@@ -64,7 +64,8 @@
         </where>
     </delete>
 
-    <delete id="deleteGoal" parameterType="Integer">
+<!--
+    <delete id="deleteGoalByLesson" parameterType="Integer">
         delete
         from ls_goal
         <where>
@@ -74,5 +75,6 @@
             </choose>
         </where>
     </delete>
+-->
 
 </mapper>

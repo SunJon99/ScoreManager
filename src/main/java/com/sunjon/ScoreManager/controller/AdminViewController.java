@@ -119,4 +119,18 @@ public class AdminViewController {
         return "admin/goal-edit";
     }
 
+    @RequestMapping("/tType-list")
+    public String tTypeList(){
+        return "admin/tType-list";
+    }
+
+    @RequestMapping("/type-add")
+    public String tTypeAdd(){
+        return "admin/type-add";
+    }
+
+    @RequestMapping("/type-edit")
+    public String tTypeEdit(){
+        return "admin/type-edit";
+    }
 }
