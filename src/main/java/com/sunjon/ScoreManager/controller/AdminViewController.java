@@ -133,4 +133,14 @@ public class AdminViewController {
     public String tTypeEdit(){
         return "admin/type-edit";
     }
+
+    @RequestMapping("/relation_list")
+    public String relationList(){
+        return "admin/relation_list";
+    }
+
+    @RequestMapping("/relation_add")
+    public String relationAdd(){
+        return "admin/relation_add";
+    }
 }

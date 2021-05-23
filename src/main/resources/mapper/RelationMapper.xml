@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunjon.ScoreManager.mapper.RelationMapper">
+    <resultMap id="RelationMap" type="Relation">
+        <id property="id" column="lr_id"/>
+        <result property="classId" column="cl_id"/>
+        <result property="className" column="cl_name"/>
+        <result property="lessonId" column="ls_id"/>
+        <result property="lessonName" column="ls_name"/>
+        <result property="teacherId" column="tc_id"/>
+        <result property="teacherName" column="tc_name"/>
+    </resultMap>
+
+    <select id="getAllRelation" resultMap="RelationMap">
+        select
+            ls_relation.lr_id,
+            ls_relation.ls_id,
+            ls_relation.tc_id,
+            ls_relation.cl_id,
+            lesson.ls_name,
+            class.cl_name,
+            teacher.tc_name
+        from ls_relation inner join lesson
+           on ls_relation.ls_id = lesson.ls_id
+           inner join class
+           on ls_relation.cl_id = class.cl_id
+           inner join teacher
+           on ls_relation.tc_id = teacher.tc_id
+        where ls_relation.delete_time is null
+            limit #{limit} offset #{start}
+    </select>
+
+    <select id="countRelations" resultType="Integer">
+        select count(lr_id)
+        from ls_relation
+        where delete_time is null
+    </select>
+
+    <!--不会在数据库中删除一个学院，只是将delete_time改为非空-->
+    <update id="deleteRelation" parameterType="Relation">
+        update ls_relation
+        set delete_time = current_timestamp
+        <where>
+            <choose>
+                <when test="id != null and id > 0">lr_id = #{id}</when>
+                <otherwise>dp_id = -1</otherwise>
+            </choose>
+        </where>
+    </update>
+
+    <insert id="addRelation" parameterType="Relation">
+        insert into ls_relation(ls_id,tc_id,cl_id)
+        values(#{lessonId},#{teacherId},#{classId})
+    </insert>
+
+
+</mapper>
