@@ -13,4 +13,5 @@ public interface RelationMapper {
     void deleteRelation(Relation relation);
     Integer countRelations();
     void addRelation(Relation relation);
+    List<Relation> getAllMine(Integer teacherId);
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -54,6 +55,29 @@ public class RelationController {
             return new Success(1);
         }
         return new Success();
+    }
+
+    @RequestMapping("/getAllMine")
+    public RelationList getAllMine(HttpSession session){
+        Object obj = session.getAttribute("type");
+        if(obj instanceof Integer){
+            if((Integer)obj != 2){
+                return null;
+            }
+        }
+
+        obj = session.getAttribute("id");
+        Integer id = -1;
+        if(obj instanceof Integer){
+            id = (Integer) obj;
+        }
+        List<Relation> list = relationMapper.getAllMine(id);
+        Integer count = list.size();
+        RelationList data = new RelationList();
+        data.setData(list);
+        data.setCode(0);
+        data.setCount(count);
+        return data;
     }
 
 

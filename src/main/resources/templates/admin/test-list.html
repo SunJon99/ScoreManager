@@ -15,7 +15,7 @@
 
 <body>
 <div class="page-content-wrap" id="LessonInfo">
-  <h5 style="text-align:center;font-size: 20px;line-height: 25px;color:#666">课程目标管理界面</h5>
+  <h5 style="text-align:center;font-size: 20px;line-height: 25px;color:#666">考核项目管理界面</h5>
   <hr>
   <!-- 操作区域 -->
   <div>
@@ -78,13 +78,13 @@
     table.on('tool(demo)', function(obj) {
       var data = obj.data;
       if (obj.event === 'del') {
-        layer.confirm('真的删除这个课程目标信息吗？', function(index) {
+        layer.confirm('真的删除这个考核项目信息吗？', function(index) {
           var data = obj.data;
           $.ajax({
             //几个参数需要注意一下
             type: "POST",//方法类型
             dataType: "json",//预期服务器返回的数据类型
-            url: "/goal/deleteGoal",//url
+            url: "/test/deleteTest",//url
             data: data,
             success: function (result) {
               if (result.code == "0") {
@@ -105,23 +105,6 @@
           });
         });
       }
-      if (obj.event === 'edit') {
-        var editFrom = layui.layer.open({
-          title : "编辑课程目标信息",
-          type : 2,
-          content : "/goal-edit",//弹出层页面
-          area: ['800px', '400px'],
-          success : function(layero, index){
-            var body = layui.layer.getChildFrame('body', index);
-            //获取窗口对象
-            var iframeWindow = layero.find('iframe')[0].contentWindow;
-            body.find("#id").val(data.id);
-            body.find("#name").val(data.name);
-            body.find("#description").val(data.description);
-            body.find("#proportion").val(data.proportion);
-            iframeWindow.layui.form.render('select');
-          }});
-      }
     });
 
     //触发事件
@@ -131,13 +114,12 @@
         var lessonId = $("#id").val();
         layer.open({
           type: 2,
-          title: '添加课程目标信息',
+          title: '添加考核项目信息',
           shadeClose: true,
           shade: false,
           maxmin:true,
-          /* maxmin: true,  *///开启最大化最小化按钮
           area: ['800px', '400px'],
-          content: '/goal-add',
+          content: '/test-add',
           success : function(layero, index){
             var body = layui.layer.getChildFrame('body', index);
             //获取窗口对象
@@ -160,9 +142,8 @@
                 [
                 {field:'id',sort:true,width:150,title:'编号'}
                 ,{field:'name',width:200,title:'名称'}
-                ,{field:'description',width:300,title:'说明'}
-                ,{field:'proportion',width:200,title:'占比'}
-                ,{field:'lessonName',width:200,title:'所属课程'}
+                ,{field:'proportion',width:200,title:'总分'}
+                ,{field:'lessonName',width:200,title:'所属目标'}
                 ,{fixed:'right',width:200,align:'left',toolbar:'#barDemo'}
                 ]
             ]

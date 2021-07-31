@@ -5,7 +5,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <title>学生成绩查询系统</title>
+    <title>学生成绩管理系统</title>
     <link rel="stylesheet" type="text/css" href="admin/layui/css/layui.css"/>
     <link rel="stylesheet" type="text/css" href="admin/css/admin.css"/>
 </head>
@@ -14,20 +14,18 @@
     <!--侧边栏-->
     <div class="main-layout-side">
         <div class="m-logo" style="color:white;line-height:60px;text-align:center; font-size:18px;">
-            <span>学生成绩查询系统</span>
+            <span>学生成绩管理系统</span>
         </div>
         <ul class="layui-nav layui-nav-tree" lay-filter="leftNav">
             <li class="layui-nav-item">
-                <a href="javascript:;" data-url=" my-lesson"><i class="layui-icon">&#xe705;</i>我的课程</a>
+                <a href="javascript:;" data-url=" my-lesson"><i class="layui-icon">&#xe705;</i>成绩管理</a>
             </li>
-            <li class="layui-nav-item">
-                <a href="javascript:;" data-url="my-score"><i class="layui-icon">&#xe629;</i>我的成绩</a>
-            </li>
+            
             <li class="layui-nav-item">
                 <a href="javascript:;" data-url="my-info"><i class="layui-icon">&#xe60b;</i>我的信息</a>
             </li>
             <li class="layui-nav-item">
-                <a href="javascript:;"  data-id='6' data-url="loginOut"><i class="layui-icon">&#xe682;</i>退出登录</a>
+                <a id="loginOut" href="javascript:;"><i class="layui-icon">&#xe682;</i>退出登录</a>
             </li>
         </ul>
     </div>
@@ -41,12 +39,6 @@
                 </a> -->
             </div>
             <ul class="layui-nav" lay-filter="rightNav">
-                <!-- 					  <li class="layui-nav-item"><a href="javascript:;"  data-id='4' data-text="邮件系统"><i class="iconfont">&#xe603;</i></a></li>
-                                      <li class="layui-nav-item">
-                                        <a href="javascript:;" data-url="admin-info.html" style="color:black" data-id='5' data-text="个人信息">个人信息</a>
-                                      </li>
-                                       -->
-                <li class="layui-nav-item" ><a href="javascript:;" data-url="loginOut" style="color:black" >退出</a></li>
             </ul>
         </div>
         <!--主体内容-->
@@ -59,7 +51,7 @@
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show" style="background: #f5f5f5;">
                         <!--1-->
-                        <iframe src="my-info" id="iframInfo" width="100%" height="100%" name="iframe" scrolling="auto" class="iframe" framborder="0"></iframe>
+                        <iframe src="my-lesson" id="iframInfo" width="100%" height="100%" name="iframe" scrolling="auto" class="iframe" framborder="0"></iframe>
                         <!--1end-->
                     </div>
                 </div>
@@ -73,25 +65,13 @@
 </div>
 <script src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-    $(".layui-nav-item a").on('click',function(){
-        var address=$(this).attr("data-url");
-        if(undefined==address||"undefined"==address){
-            alert("未配置地址");
-        }else{
-            if("loginOut"==address){
-                loginOut();
-            }else{
-                $("#iframInfo").attr("src",address);
-            }
-        }
-    })
-    /* 	$("#loginOut").on('click',loginOut); */
+    $("#loginOut").on('click',loginOut);
     function loginOut(){
         $.ajax({
             //几个参数需要注意一下
             type: "POST",//方法类型
             dataType: "json",//预期服务器返回的数据类型
-            url: "/user/studentloginOut",//url
+            url: "login/loginOut",//url
             data: {},
             success: function (result) {
                 if (result.code == "0") {

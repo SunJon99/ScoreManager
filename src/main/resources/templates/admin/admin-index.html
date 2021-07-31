@@ -42,7 +42,7 @@
         <a href="javascript:;" data-url=" my-lesson"><i class="layui-icon">&#xe60b;</i>个人信息管理</a>
       </li>
       <li class="layui-nav-item">
-        <a href="javascript:;"  data-id='6' data-url="loginOut"><i class="layui-icon">&#xe682;</i>退出登录</a>
+        <a id="loginOut"href="javascript:;"><i class="layui-icon">&#xe60b;</i>Exit</a>
       </li>
     </ul>
   </div>
@@ -73,7 +73,7 @@
       //几个参数需要注意一下
       type: "POST",//方法类型
       dataType: "json",//预期服务器返回的数据类型
-      url: "/user/studentloginOut",//url
+      url: "/login/loginOut",//url
       data: {},
       success: function (result) {
         if (result.code == "0") {

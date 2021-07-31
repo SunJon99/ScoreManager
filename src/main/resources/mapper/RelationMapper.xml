@@ -56,4 +56,24 @@
     </insert>
 
 
+    <select id="getAllMine"  resultMap="RelationMap">
+        select
+            ls_relation.lr_id,
+            ls_relation.ls_id,
+            ls_relation.tc_id,
+            ls_relation.cl_id,
+            lesson.ls_name,
+            class.cl_name,
+            teacher.tc_name
+        from ls_relation inner join lesson
+                                    on ls_relation.ls_id = lesson.ls_id
+                         inner join class
+                                    on ls_relation.cl_id = class.cl_id
+                         inner join teacher
+                                    on ls_relation.tc_id = teacher.tc_id
+        where ls_relation.delete_time is null
+            and ls_relation.tc_id = #{teacherId}
+    </select>
+
+
 </mapper>

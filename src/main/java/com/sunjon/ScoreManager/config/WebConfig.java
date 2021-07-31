@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-public class WebConfig implements WebMvcConfigurer {
+public class  WebConfig implements WebMvcConfigurer {
 
     private AdminInterceptor adminInterceptor;
     private TeacherInterceptor teacherInterceptor;

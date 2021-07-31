@@ -56,6 +56,15 @@ public class LoginController {
 
     }
 
+    @RequestMapping("/loginOut")
+    @ResponseBody
+    public Success loginOut(HttpServletRequest request,HttpServletResponse response){
+        HttpSession session = request.getSession();
+        session.removeAttribute("type");
+        session.removeAttribute("id");
+        return new Success();
+    }
+
     private boolean adminLogin(LoginInfo login,
                                HttpServletRequest request,
                                HttpServletResponse response){
